@@ -1,0 +1,71 @@
+    <section class="imob" id="imobiliarias" aria-labelledby="imob-titulo">
+      <div class="imob__cartao">
+        <div class="imob__cab">
+          <p class="rotulo" data-revela>Para imobiliárias e administradoras</p>
+          <h2 class="titulo" id="imob-titulo" data-palavras data-revela="palavras"><span class="titulo__leve">Referência em</span> <span class="titulo__forte">seguro fiança.</span></h2>
+          <p class="imob__apoio" data-revela style="--atraso:.2s">Somos parceiros de imobiliárias e administradoras de Alphaville e região. Cuidamos da garantia do aluguel do começo ao fim, com a Porto Seguro e as principais seguradoras.</p>
+        </div>
+
+        <ul class="imob__lista" role="list">
+          <li class="imob__item vidro" data-revela="grade" style="--i:0"><i data-i="key" data-w="light" class="imob__i"></i><div><h3 class="imob__nome">Seguro Fiança</h3><p class="imob__desc">O inquilino aluga sem fiador e o aluguel fica garantido.</p></div></li>
+          <li class="imob__item vidro" data-revela="grade" style="--i:1"><i data-i="coins" data-w="light" class="imob__i"></i><div><h3 class="imob__nome">Título de Capitalização</h3><p class="imob__desc">Garantia de locação com resgate no fim do contrato.</p></div></li>
+          <li class="imob__item vidro" data-revela="grade" style="--i:2"><i data-i="fire" data-w="light" class="imob__i"></i><div><h3 class="imob__nome">Seguro Incêndio</h3><p class="imob__desc">A proteção do imóvel exigida no contrato de locação.</p></div></li>
+        </ul>
+
+        <div class="imob__acoes" data-revela style="--atraso:.3s">
+          <div class="imob__botoes">
+            <a class="btn btn--vidro" href="{{wa:parceiro}}" data-zap="imob-parceiro" data-parceiro data-brilho><span class="brilho" aria-hidden="true"><span class="brilho__volta"><span class="brilho__ponto"></span></span></span><span class="brilho-fio" aria-hidden="true"><span class="brilho__ponto"></span></span>Quero ser parceiro<i data-i="arrow-up-right" data-w="regular" class="i--anda"></i></a>
+            <a class="btn btn--leve" href="{{wa:paulo}}" data-zap="imob-paulo">Falar com o Paulo</a>
+          </div>
+          <p class="imob__nota">Cadastro em 1 minuto. A gente responde pelo WhatsApp.</p>
+        </div>
+
+        <div class="imob__foto" data-revela="zoom">
+          <img class="imob__img" data-img="imob" sizes="(min-width: 64em) 44vw, calc(100vw - 64px)" alt="Corretor de imóveis entrega as chaves de um apartamento para a nova inquilina em Alphaville, ao pôr do sol" loading="lazy" decoding="async">
+          <p class="imob__selo vidro"><img src="/assets/extra/porto-branco.webp" alt="Porto" width="421" height="96" loading="lazy" decoding="async"><span>Seguro fiança Porto</span></p>
+          <p class="imob__widget vidro"><i data-i="check-circle" data-w="regular"></i>Contrato aprovado · Sem fiador</p>
+        </div>
+
+        <ul class="imob__beneficios" role="list">
+          <li data-revela="grade" style="--i:0"><i data-i="user" data-w="light"></i>Análise do inquilino com a gente</li>
+          <li data-revela="grade" style="--i:1"><i data-i="calendar-blank" data-w="light"></i>Um consultor dedicado à sua carteira</li>
+          <li data-revela="grade" style="--i:2"><i data-i="chart-bar" data-w="light"></i>Mais contratos fechados sem fiador</li>
+        </ul>
+      </div>
+
+      <!-- cadastro de parceiro: janela por cima da página; o formulário entra do <template> na
+           1ª abertura (03b-imobiliarias.js) e o envio abre o WhatsApp do Paulo com tudo preenchido.
+           Sem JS o botão leva direto pro WhatsApp. -->
+      <dialog class="parceiro" aria-labelledby="parceiro-titulo">
+        <div class="parceiro__caixa">
+          <button class="parceiro__fechar" type="button" aria-label="Fechar"><i data-i="x" data-w="regular"></i></button>
+          <p class="rotulo">Cadastro de parceiro</p>
+          <h2 class="parceiro__titulo" id="parceiro-titulo">Vamos trabalhar juntos.</h2>
+          <p class="parceiro__sub">Conte um pouco da sua imobiliária. O Paulo responde pelo WhatsApp.</p>
+          <div class="parceiro__vaga"></div>
+        </div>
+        <template id="form-parceiro">
+          <form class="form" novalidate data-wa="{{cfg.whatsapp}}">
+            <label class="campo"><span class="campo__rotulo">Seu nome</span><input class="campo__entrada" name="nome" type="text" autocomplete="name" placeholder="Seu nome" required></label>
+            <label class="campo"><span class="campo__rotulo">Imobiliária ou administradora</span><input class="campo__entrada" name="empresa" type="text" autocomplete="organization" placeholder="Nome da empresa" required></label>
+            <div class="parceiro__dupla">
+              <label class="campo"><span class="campo__rotulo">WhatsApp</span><input class="campo__entrada" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 99999-9999" required></label>
+              <label class="campo"><span class="campo__rotulo">Cidade</span><input class="campo__entrada" name="cidade" type="text" autocomplete="address-level2" placeholder="Ex.: Barueri"></label>
+            </div>
+            <label class="campo"><span class="campo__rotulo">Contratos de locação por mês</span>
+              <span class="campo__select"><select class="campo__entrada" name="volume">
+                <option value="" selected>Selecione (opcional)</option>
+                <option>Até 5</option>
+                <option>De 6 a 20</option>
+                <option>De 21 a 50</option>
+                <option>Mais de 50</option>
+              </select></span>
+            </label>
+            <label class="aceite"><input type="checkbox" name="aceite" required><span>Concordo com o uso dos meus dados para o contato da Henry, conforme a <a href="/privacidade">Política de Privacidade</a>.</span></label>
+            <p class="form__erro" role="alert" hidden></p>
+            <button class="btn btn--vidro form__enviar" type="submit">Enviar cadastro<i data-i="arrow-up-right" data-w="regular" class="i--anda"></i></button>
+            <p class="form__nota">O envio abre o WhatsApp com a mensagem pronta.</p>
+          </form>
+        </template>
+      </dialog>
+    </section>

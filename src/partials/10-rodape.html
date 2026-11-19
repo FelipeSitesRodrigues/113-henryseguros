@@ -1,0 +1,35 @@
+  <footer class="rodape" id="rodape">
+    <div class="container rodape__grade">
+      <div class="rodape__marca">
+        <a class="rodape__logo" href="{{inicio}}" aria-label="Henry Seguros, voltar ao início"><!-- @parcial x-logo --></a>
+        <p class="rodape__slogan">Confiança em cada escolha, segurança em cada passo.</p>
+      </div>
+      <nav class="rodape__col" aria-label="Seguros">
+        <h2 class="rodape__titulo">Soluções</h2>
+        <ul role="list">
+              <!-- @solucoes-rodape -->
+        </ul>
+      </nav>
+      <div class="rodape__col">
+        <h2 class="rodape__titulo">Contato</h2>
+        <ul class="rodape__contato" role="list">
+          <li><a href="{{wa:consultor}}" data-zap="rodape"><i data-i="whatsapp-logo" data-w="light"></i>{{cfg.whatsappExibir}}</a></li>
+          <li><a href="mailto:{{cfg.email}}"><i data-i="envelope-simple" data-w="light"></i>{{cfg.email}}</a></li>
+          <li><i data-i="map-pin" data-w="light"></i><span>{{cfg.endereco}},<br>{{cfg.bairro}}, {{cfg.cidade}}/{{cfg.uf}}</span></li>
+          <li><i data-i="clock" data-w="light"></i><span>{{cfg.horario}}</span></li>
+        </ul>
+      </div>
+      <div class="rodape__col">
+        <h2 class="rodape__titulo">Siga</h2>
+        <ul role="list">
+          <li><a href="{{cfg.instagramUrl}}" target="_blank" rel="noopener" class="rodape__insta"><i data-i="instagram-logo" data-w="light"></i>@{{cfg.instagram}}</a></li>
+          <li><a href="/sobre">Sobre a Henry</a></li>
+          <li><a href="/privacidade">Política de Privacidade</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container rodape__base">
+      <p>{{cfg.razao}} · CNPJ {{cfg.cnpj}} · SUSEP nº {{cfg.susep}}</p>
+      <p>© {{ano}} Henry Seguros · <a href="{{cfg.credito}}" target="_blank" rel="noopener">Felipe Rodrigues Sites</a></p>
+    </div>
+  </footer>

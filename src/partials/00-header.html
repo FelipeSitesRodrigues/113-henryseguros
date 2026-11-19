@@ -1,0 +1,35 @@
+  <header class="topo" id="topo">
+    <div class="topo__barra">
+      <nav class="menu" id="menu" aria-label="Principal">
+        <ul class="menu__lista" role="list">
+          <li><a class="vidro pilula" href="{{inicio}}" data-pag="home">Início</a></li>
+          <li class="sub">
+            <button class="vidro pilula sub__botao" type="button" aria-expanded="false" aria-controls="sub-solucoes">Soluções<i data-i="caret-down" data-w="regular" class="sub__seta"></i></button>
+            <div class="sub__painel" id="sub-solucoes">
+              <ul class="sub__lista" role="list">
+                <!-- @solucoes-menu -->
+              </ul>
+              <a class="sub__todas" href="/#solucoes">Ver todas as soluções<i data-i="arrow-right" data-w="regular"></i></a>
+            </div>
+          </li>
+          <li><a class="vidro pilula" href="/#como-funciona">Como funciona</a></li>
+          <li><a class="vidro pilula" href="/sobre" data-pag="sobre">Sobre</a></li>
+          <li><a class="vidro pilula" href="#contato">Contato</a></li>
+        </ul>
+        <div class="menu__extra">
+          <a class="btn btn--vidro menu__cta" href="{{wa:consultor}}" data-zap="menu-celular"><i data-i="whatsapp-logo" data-w="regular"></i>Falar com um consultor</a>
+          <p class="menu__rodape">{{cfg.endereco}}<br>{{cfg.bairro}}, {{cfg.cidade}}/{{cfg.uf}}</p>
+        </div>
+      </nav>
+
+      <a class="marca" href="{{inicio}}" aria-label="Henry Seguros, voltar ao início">
+        <!-- @parcial x-logo -->
+      </a>
+
+      <a class="vidro pilula topo__zap" href="{{wa:consultor}}" data-zap="topo"><i data-i="whatsapp-logo" data-w="regular"></i><span><span class="topo__zap-pre">Falar no </span>WhatsApp</span></a>
+
+      <button class="vidro topo__menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+        <span class="topo__menu-linhas" aria-hidden="true"><span></span></span>
+      </button>
+    </div>
+  </header>

@@ -1,0 +1,107 @@
+/* ---------------------------------------------------------------- imobiliárias (seguro fiança)
+   Mockup aprovado (2026-11-18), pedido do Paulo nos áudios: a Henry quer ser conhecida como
+   referência em seguros imobiliários, principalmente seguro fiança com a Porto. Fala com
+   imobiliária e administradora. Cartão petróleo com brilho verde embaixo à esquerda; texto e
+   os 3 produtos em cápsulas de vidro à esquerda, a foto das chaves à direita com o selo da
+   Porto (em branco) e o widget "Contrato aprovado"; embaixo, os 3 benefícios em linha.
+   "Quero ser parceiro" abre o cadastro numa janela (03b-imobiliarias.js).
+   Celular: título, foto, produtos, botões e benefícios, um embaixo do outro.            */
+.imob { padding: clamp(12px, 1.5vw, 24px) var(--respiro); background: var(--off); }
+.imob__cartao {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: 'cab foto' 'lista foto' 'acoes foto' 'ben ben';
+  align-content: start;
+  column-gap: clamp(32px, 4vw, 72px);
+  padding: clamp(40px, 4.4vw, 72px) clamp(24px, 5vw, 84px) clamp(28px, 2.6vw, 40px);
+  border-radius: var(--raio-g);
+  background:
+    radial-gradient(38% 46% at 0% 74%, rgb(22 165 117 / .34), transparent 70%),
+    linear-gradient(135deg, #0A3F49 0%, var(--noite) 70%);
+  color: var(--branco);
+  --cor-titulo: var(--branco);
+  --cor-titulo-leve: rgb(255 255 255 / .72);
+  --cor-rotulo: var(--branco);
+}
+.imob__cab { grid-area: cab; }
+.imob .rotulo { color: var(--branco); }
+.imob .titulo { margin-top: 14px; font-size: clamp(38px, 1rem + 2.7vw, 66px); }
+.imob .titulo > span { display: block; }
+.imob__apoio { max-width: 34em; margin-top: 20px; color: rgb(255 255 255 / .86); font-size: clamp(15.5px, .85rem + .3vw, 18px); line-height: 1.55; }
+
+.imob__lista { grid-area: lista; display: grid; gap: 12px; margin-top: clamp(24px, 2.4vw, 34px); }
+.imob__item { display: flex; align-items: center; gap: 20px; padding: 14px 24px; border-radius: 22px; }
+.imob__item.vidro { background: linear-gradient(180deg, rgb(255 255 255 / .1), rgb(255 255 255 / .03)); border-color: rgb(255 255 255 / .16); }
+.imob__i { flex: none; width: 34px; height: 34px; padding-right: 20px; border-right: 1px solid rgb(255 255 255 / .22); box-sizing: content-box; color: var(--verde-vivo); }
+.imob__nome { font: 600 clamp(17px, .8rem + .4vw, 20px)/1.25 var(--fonte); letter-spacing: -.01em; }
+.imob__desc { margin-top: 3px; color: rgb(255 255 255 / .84); font-size: 14.5px; line-height: 1.45; }
+
+.imob__acoes { grid-area: acoes; margin-top: clamp(22px, 2.2vw, 30px); }
+.imob__botoes { display: flex; flex-wrap: wrap; gap: 14px; }
+.imob__botoes .btn--leve { padding-inline: 34px; }
+.imob__nota { margin-top: 14px; color: rgb(255 255 255 / .66); font-size: 14px; }
+
+.imob__foto { grid-area: foto; position: relative; align-self: stretch; min-height: 520px; border-radius: 30px; overflow: clip; isolation: isolate; background: #5B3A22; }
+.imob__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% 50%; }
+.imob__foto::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(3 37 43 / .45), transparent 30%), linear-gradient(180deg, rgb(3 37 43 / .3), transparent 26%); pointer-events: none; }
+.imob__selo, .imob__widget { position: absolute; z-index: 1; color: var(--branco); }
+.imob__selo { top: clamp(18px, 2vw, 28px); left: clamp(18px, 2vw, 28px); display: grid; justify-items: start; gap: 8px; padding: 16px 22px; border-radius: 22px; font-size: 14px; font-weight: 600; }
+.imob__selo img { width: 150px; height: auto; }
+.imob__widget { bottom: clamp(18px, 2vw, 30px); left: clamp(18px, 2vw, 30px); display: inline-flex; align-items: center; gap: 12px; padding: 12px 22px 12px 16px; border-radius: 999px; font-size: 15px; font-weight: 500; }
+.imob__widget .i { width: 24px; height: 24px; color: var(--verde-vivo); }
+
+.imob__beneficios { grid-area: ben; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(28px, 3vw, 44px); padding-top: clamp(22px, 2.2vw, 30px); border-top: 1px solid rgb(255 255 255 / .16); }
+.imob__beneficios li { display: flex; align-items: center; justify-content: center; gap: 14px; padding-inline: 16px; font-size: clamp(15px, .8rem + .3vw, 17.5px); font-weight: 500; }
+.imob__beneficios li + li { border-left: 1px solid rgb(255 255 255 / .16); }
+.imob__beneficios li:first-child { justify-content: flex-start; padding-left: 0; }
+.imob__beneficios li:last-child { justify-content: flex-end; padding-right: 0; }
+.imob__beneficios .i { flex: none; width: 28px; height: 28px; color: var(--verde-vivo); }
+
+@media (max-width: 63.99em) {
+  .imob__cartao { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'cab' 'foto' 'lista' 'acoes' 'ben'; padding: 36px 20px 26px; }
+  .imob__foto { min-height: 0; aspect-ratio: 933 / 892; margin-top: 26px; border-radius: 24px; }
+  .imob__selo { padding: 12px 16px; font-size: 12.5px; }
+  .imob__selo img { width: 110px; }
+  .imob__widget { left: 14px; right: 14px; bottom: 14px; justify-content: center; font-size: 14px; }
+  .imob__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .imob__item { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px; border-radius: 20px; }
+  .imob__item:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .imob__i { width: 28px; height: 28px; padding-right: 0; border-right: 0; }
+  .imob__nome { font-size: 16px; }
+  .imob__desc { font-size: 13.5px; }
+  .imob__botoes .btn { width: 100%; white-space: normal; }
+  .imob__nota { text-align: center; }
+  .imob__beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
+  .imob__beneficios li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .imob__beneficios li { align-items: flex-start; font-size: 14px; }
+  .imob__beneficios li + li { border-left: 0; }
+  .imob__beneficios li, .imob__beneficios li:first-child, .imob__beneficios li:last-child { justify-content: flex-start; padding: 0; border: 0; }
+}
+@media (max-width: 39.99em) {
+  .imob .titulo { font-size: min(40px, 10.2vw); }
+}
+
+/* ---------------------------------------------------------------- cadastro de parceiro (janela) */
+.parceiro {
+  width: min(560px, 100% - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / .14);
+  border-radius: 30px;
+  background: radial-gradient(60% 40% at 0% 100%, rgb(22 165 117 / .25), transparent 70%), var(--noite);
+  color: var(--branco);
+  box-shadow: 0 40px 80px -30px rgb(0 0 0 / .7);
+  overscroll-behavior: contain;
+}
+.parceiro::backdrop { background: rgb(2 20 24 / .7); }
+.parceiro[open] { animation: parceiro-entra .45s var(--anim-ease) both; }
+@keyframes parceiro-entra { from { opacity: 0; transform: translate3d(0, 18px, 0) scale(.98); } }
+.parceiro__caixa { position: relative; padding: clamp(28px, 3vw, 40px); }
+.parceiro .rotulo { color: var(--verde-vivo); }
+.parceiro__titulo { margin-top: 10px; font: 600 clamp(28px, 1rem + 1.4vw, 38px)/1.08 var(--fonte); letter-spacing: -.03em; }
+.parceiro__sub { margin: 10px 0 24px; color: rgb(255 255 255 / .78); font-size: 15px; line-height: 1.5; }
+.parceiro__fechar { position: absolute; top: 18px; right: 18px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgb(255 255 255 / .18); border-radius: 50%; background: rgb(255 255 255 / .06); color: var(--branco); cursor: pointer; }
+.parceiro__fechar .i { width: 20px; height: 20px; }
+.parceiro__dupla { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 39.99em) { .parceiro__dupla { grid-template-columns: minmax(0, 1fr); } }

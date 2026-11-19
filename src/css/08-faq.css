@@ -1,0 +1,38 @@
+/* ---------------------------------------------------------------- dúvidas (Home e páginas de seguro)
+   Mockup aprovado: petróleo noite, título à esquerda e as perguntas em linhas de vidro escuro
+   à direita, com o "+" de vidro. A primeira começa aberta. A resposta abre pela grade
+   (0fr -> 1fr), sem medir altura em JS (08-faq.js cuida do aria-expanded e do inert).
+   Nas páginas de seguro a mesma lista entra no fundo claro (.faq--clara).                 */
+.faq__grade { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: clamp(32px, 5vw, 96px); align-items: start; }
+.faq__cab { position: sticky; top: 120px; }
+.faq__lista { display: grid; gap: 12px; }
+.faq__item { border: 1px solid rgb(255 255 255 / .14); border-radius: 22px; background: linear-gradient(180deg, rgb(255 255 255 / .07), rgb(255 255 255 / .025)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .08); transition: background-color .3s ease, border-color .3s ease; }
+.faq__item--aberto { border-color: rgb(255 255 255 / .24); background: linear-gradient(180deg, rgb(255 255 255 / .11), rgb(255 255 255 / .04)); }
+.faq__botao { display: flex; align-items: center; justify-content: space-between; gap: 18px; width: 100%; min-height: 64px; padding: 16px 16px 16px 26px; color: var(--branco); font: 500 clamp(16px, .85rem + .35vw, 20px)/1.3 var(--fonte); text-align: left; }
+.faq__mais { position: relative; display: grid; place-items: center; flex: none; width: 40px; height: 40px; border: 1px solid rgb(255 255 255 / .3); border-radius: 50%; background: rgb(255 255 255 / .08); transition: background-color .3s ease; }
+.faq__mais::before, .faq__mais::after { content: ''; position: absolute; width: 14px; height: 1.5PX; border-radius: 2px; background: currentColor; transition: transform .5s var(--ease-out); }
+.faq__mais::after { transform: rotate(90deg); }
+.faq__item--aberto .faq__mais { border-color: transparent; background: var(--verde); }
+.faq__item--aberto .faq__mais::after { transform: rotate(0deg); }
+.faq__resposta { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease-out); }
+.faq__item--aberto .faq__resposta { grid-template-rows: 1fr; }
+.faq__miolo { overflow: hidden; }
+.faq__miolo p { padding: 0 72px 24px 26px; color: rgb(255 255 255 / .78); font-size: clamp(15px, .85rem + .2vw, 17px); line-height: 1.6; }
+@media (hover: hover) {
+  .faq__botao:hover .faq__mais { background: rgb(255 255 255 / .18); }
+  .faq__item--aberto .faq__botao:hover .faq__mais { background: var(--verde); }
+}
+@media (max-width: 63.99em) {
+  .faq__grade { grid-template-columns: minmax(0, 1fr); }
+  .faq__cab { position: static; }
+  .faq__botao { padding-left: 20px; }
+  .faq__miolo p { padding: 0 20px 22px; }
+}
+
+/* versão clara (páginas de seguro) */
+.faq--clara .faq__item { border-color: var(--fio-claro); background: var(--branco); box-shadow: 0 14px 30px -28px rgb(0 40 48 / .5); }
+.faq--clara .faq__item--aberto { border-color: #CFD8D6; }
+.faq--clara .faq__botao { color: var(--tinta); }
+.faq--clara .faq__mais { border-color: var(--fio-claro); background: var(--areia); color: var(--petroleo); }
+.faq--clara .faq__item--aberto .faq__mais { background: var(--petroleo); color: var(--branco); }
+.faq--clara .faq__miolo p { color: var(--texto-claro); }

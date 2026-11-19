@@ -1,0 +1,34 @@
+{
+  "dominio": "https://www.henryseguros.com.br",
+  "nome": "Henry Seguros",
+  "razao": "Henry Corretora de Seguros Ltda",
+  "cnpj": "65.530.592/0001-07",
+  "susep": "262178985",
+  "dono": "Paulo Henrique de Oliveira",
+  "whatsapp": "5511946662511",
+  "whatsappExibir": "(11) 94666-2511",
+  "telefone": "+55 11 94666-2511",
+  "email": "pauloh@henryseguros.com.br",
+  "instagram": "henry.seguros",
+  "instagramUrl": "https://www.instagram.com/henry.seguros/",
+  "endereco": "Alameda Rio Negro, 1477, 5º andar",
+  "bairro": "Alphaville",
+  "cidade": "Barueri",
+  "uf": "SP",
+  "horario": "Seg a sex, das 9h às 18h",
+  "credito": "https://www.instagram.com/feliperodrigues.sites/",
+  "mensagens": {
+    "consultor": "Olá! Vim pelo site da Henry e gostaria de falar com um consultor.",
+    "paulo": "Olá, Paulo! Vim pelo site da Henry e gostaria de conversar sobre seguro.",
+    "duvida": "Olá! Vim pelo site da Henry e tenho uma dúvida sobre seguro.",
+    "outro": "Olá! Vim pelo site da Henry e queria entender qual seguro serve para o meu caso.",
+    "parceiro": "Olá, Paulo! Vim pelo site da Henry e quero ser parceiro imobiliário em seguro fiança.",
+    "servico": "Olá! Vim pelo site da Henry e gostaria de uma cotação de *{servico}*."
+  },
+  "pendencias": [
+    "depoimentos: nenhum real ainda (os do site antigo não entram). A seção fica fora até o Paulo mandar prints do Google ou mensagens de cliente",
+    "conferir com o Paulo: 'revisão todo ano', 'retorno no mesmo dia útil' (FAQ) e a resposta 'você paga o preço da seguradora' (objeções)",
+    "o nome Henry vem de Paulo Henrique? Se sim, uma linha na página Sobre",
+    "domínio: o site novo vai no henryseguros.com.br (hoje o site antigo)? canonical, sitemap e og:image já apontam pra www.henryseguros.com.br"
+  ]
+}

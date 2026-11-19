@@ -1,0 +1,47 @@
+    <section class="cta" id="contato" aria-labelledby="cta-titulo" data-zap-some>
+      <div class="cta__cartao">
+        <img class="cta__foto" data-img="ceu" sizes="calc(100vw - 48px)" alt="" loading="lazy" decoding="async">
+        <div class="cta__grade">
+          <div class="cta__texto">
+            <h2 class="cta__titulo" id="cta-titulo" data-palavras data-revela="palavras">Vamos cuidar<br> do que é seu?</h2>
+            <p class="cta__sub" data-revela style="--atraso:.3s">Conte o que você quer proteger. Um consultor da Henry responde com uma proposta feita para você.</p>
+            <ul class="cta__contato" role="list" data-revela style="--atraso:.4s">
+              <li><a href="{{wa:consultor}}" data-zap="cta-numero"><i data-i="whatsapp-logo" data-w="regular"></i>{{cfg.whatsappExibir}}</a></li>
+              <li><a href="mailto:{{cfg.email}}"><i data-i="envelope-simple" data-w="regular"></i>{{cfg.email}}</a></li>
+            </ul>
+          </div>
+          <!-- O formulário fica num <template> e entra quando a seção chega perto (09-cta.js): no
+               HTML ele fazia o autofill do navegador forçar layout no carregamento (memória do 081).
+               Sem JS fica o botão do WhatsApp. -->
+          <div class="cta__painel vidro" data-revela="direita" style="--atraso:.2s">
+            <div class="form-vaga" data-form-vaga>
+              <a class="btn btn--vidro form__enviar" href="{{wa:consultor}}" data-zap="cta-sem-js">Receber minha cotação<i data-i="arrow-up-right" data-w="regular" class="i--anda"></i></a>
+            </div>
+            <template id="form-cotacao">
+              <form class="form" novalidate data-wa="{{cfg.whatsapp}}">
+                <label class="campo"><span class="campo__rotulo">Nome</span><input class="campo__entrada" name="nome" type="text" autocomplete="name" placeholder="Seu nome" required></label>
+                <label class="campo"><span class="campo__rotulo">WhatsApp</span><input class="campo__entrada" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 99999-9999" required></label>
+                <label class="campo"><span class="campo__rotulo">Tipo de seguro</span>
+                  <span class="campo__select"><select class="campo__entrada" name="tipo" required>
+                    <option value="" selected disabled>Selecione uma opção</option>
+                    <option>Seguro Auto</option>
+                    <option>Seguro Residencial</option>
+                    <option>Seguro Empresarial</option>
+                    <option>Seguro Frota</option>
+                    <option>Seguro Fiança</option>
+                    <option>Título de Capitalização</option>
+                    <option>Responsabilidade Civil</option>
+                    <option>Ainda não sei</option>
+                  </select></span>
+                </label>
+                <label class="campo"><span class="campo__rotulo">O que você quer proteger (opcional)</span><textarea class="campo__entrada" name="detalhes" rows="3" placeholder="Ex.: meu carro, minha casa, minha empresa"></textarea></label>
+                <label class="aceite"><input type="checkbox" name="aceite" required><span>Concordo com o uso dos meus dados para receber a cotação, conforme a <a href="/privacidade">Política de Privacidade</a>.</span></label>
+                <p class="form__erro" role="alert" hidden></p>
+                <button class="btn btn--vidro form__enviar" type="submit" data-brilho><span class="brilho" aria-hidden="true"><span class="brilho__volta"><span class="brilho__ponto"></span></span></span><span class="brilho-fio" aria-hidden="true"><span class="brilho__ponto"></span></span>Receber minha cotação<i data-i="arrow-up-right" data-w="regular" class="i--anda"></i></button>
+                <p class="form__nota">Seus dados ficam só com a Henry. O envio abre o WhatsApp com a mensagem pronta.</p>
+              </form>
+            </template>
+          </div>
+        </div>
+      </div>
+    </section>

@@ -1,0 +1,32 @@
+{
+ "itens": [
+  {
+   "pergunta": "Quanto custa um seguro?",
+   "resposta": "Depende do que vai ser protegido e do seu perfil. Por isso a cotação é feita para você, e não sai de tabela. Ela é gratuita e sem compromisso."
+  },
+  {
+   "pergunta": "Em quanto tempo recebo a cotação?",
+   "resposta": "Na maioria dos casos, no mesmo dia útil. Empresa e frota podem levar um pouco mais, porque comparamos várias seguradoras."
+  },
+  {
+   "pergunta": "Com quais seguradoras vocês trabalham?",
+   "resposta": "Com Porto Seguro, Tokio Marine, Bradesco Seguros, Allianz, HDI, Yelum, SulAmérica, Zurich e Suhai. Comparamos entre elas e indicamos a que faz mais sentido para você."
+  },
+  {
+   "pergunta": "O que acontece quando eu preciso acionar o seguro?",
+   "resposta": "Você chama o seu consultor. Ele abre o processo na seguradora, cuida dos documentos e acompanha até o fim."
+  },
+  {
+   "pergunta": "Atendem só Alphaville?",
+   "resposta": "O escritório fica em Alphaville, Barueri, mas o atendimento funciona por WhatsApp e videochamada, então dá pra cuidar do seu seguro de onde você estiver."
+  },
+  {
+   "pergunta": "Posso trocar meu seguro atual pela Henry?",
+   "resposta": "Pode. Comparamos sua apólice com o mercado e, se valer a pena, fazemos a troca na renovação ou antes, conforme o caso."
+  },
+  {
+   "pergunta": "Vocês atendem empresas?",
+   "resposta": "Sim. Seguro empresarial, frota e responsabilidade civil, com um consultor cuidando de todas as apólices da empresa."
+  }
+ ]
+}

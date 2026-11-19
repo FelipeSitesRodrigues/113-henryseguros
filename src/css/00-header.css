@@ -1,0 +1,225 @@
+/* ---------------------------------------------------------------- topo
+   Mockup do hero: dentro do cartão de foto, cápsulas de vidro do menu à esquerda, logo no
+   centro e "Falar no WhatsApp" em vidro à direita. Fixo: ao rolar, a barra inteira ganha um
+   fundo de vidro escuro, pra ler em cima de qualquer seção (clara ou escura).
+   Celular: logo à esquerda e o menu (hambúrguer em vidro) à direita, menu em tela cheia.   */
+.topo {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  padding: calc(var(--respiro) + 14px) calc(var(--respiro) + clamp(10px, 1.6vw, 28px)) 0;
+  pointer-events: none;
+}
+.topo__barra {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  max-width: 1720px;
+  margin-inline: auto;
+  padding: 8px;
+  border-radius: 999px;
+  pointer-events: auto;
+  transition: background-color .5s ease, box-shadow .5s ease, padding .5s var(--ease-out);
+}
+/* fundo da barra rolada numa camada à parte: o backdrop-filter na própria barra prenderia o
+   menu de tela cheia do celular dentro dela (vira o bloco de contenção do fixed) */
+.topo__barra::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgb(3 37 43 / .74);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .12), 0 16px 40px -20px rgb(0 0 0 / .6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  backdrop-filter: blur(18px) saturate(1.3);
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.topo--rolado .topo__barra::before { opacity: 1; }
+.marca { display: block; justify-self: center; width: clamp(150px, 12vw, 196px); }
+.marca .logo { width: 100%; height: auto; display: block; }
+.menu__lista { display: flex; gap: 8px; }
+.menu__lista .pilula { min-height: 46px; padding-inline: 16px; font-size: 14.5px; white-space: nowrap; }
+.menu__lista > li { flex: none; }
+.menu__lista [aria-current='page'] { background: linear-gradient(180deg, rgb(255 255 255 / .42), rgb(255 255 255 / .2)); }
+.menu__extra { display: none; }
+.topo__zap { justify-self: end; gap: 10px; min-height: 48px; padding-inline: 22px; font-weight: 600; font-size: 15px; }
+.topo__zap .i { width: 21px; height: 21px; }
+.topo__menu { display: none; }
+
+/* entrada do topo junto com o hero (só transform e opacity) */
+.js .topo__barra > * { animation: anim-desfoque .9s var(--anim-ease) calc(.1s + var(--abre, 0s)) both; }
+
+@media (max-width: 79.99em) {
+  .menu__lista .pilula { padding-inline: 13px; font-size: 13.5px; }
+  .topo__zap { padding-inline: 18px; font-size: 14px; }
+}
+
+/* ---------------------------------------------------------------- celular e tablet */
+@media (max-width: 63.99em) {
+  .topo { padding: calc(var(--respiro) + 10px) calc(var(--respiro) + 8px) 0; }
+  .topo__barra { grid-template-columns: 1fr auto; padding: 6px 6px 6px 14px; }
+  .marca { justify-self: start; width: 138px; }
+  .topo__zap { display: none; }
+  .topo__menu {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+  }
+  .topo__menu-linhas, .topo__menu-linhas::before, .topo__menu-linhas::after, .topo__menu-linhas span {
+    display: block;
+    width: 20px;
+    height: 1.5PX;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform .4s var(--ease-out), opacity .2s ease;
+  }
+  .topo__menu-linhas { position: relative; background: none; }
+  .topo__menu-linhas::before, .topo__menu-linhas::after { content: ''; position: absolute; left: 0; }
+  .topo__menu-linhas::before { top: -6px; }
+  .topo__menu-linhas::after { top: 6px; }
+  .topo--aberto .topo__menu-linhas span { opacity: 0; }
+  .topo--aberto .topo__menu-linhas::before { transform: translateY(6px) rotate(45deg); }
+  .topo--aberto .topo__menu-linhas::after { transform: translateY(-6px) rotate(-45deg); }
+
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 120px var(--margem) max(32px, env(safe-area-inset-bottom));
+    background: radial-gradient(60% 40% at 0% 100%, rgb(22 165 117 / .28), transparent 70%), var(--noite);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s ease, visibility 0s linear .4s;
+  }
+  .topo--aberto .menu { opacity: 1; visibility: visible; transition: opacity .4s ease; }
+  .menu__lista { flex-direction: column; gap: 4px; }
+  .menu__lista .pilula {
+    min-height: 64px;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid var(--fio-escuro);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -.02em;
+  }
+  .menu__extra { display: grid; gap: 18px; }
+  .menu__cta { width: 100%; }
+  .menu__rodape { color: var(--leve-escuro); font-size: 14px; line-height: 1.5; }
+  .topo--aberto .menu__lista li { animation: anim-desfoque .6s var(--anim-ease) both; }
+  .topo--aberto .menu__lista li:nth-child(2) { animation-delay: .05s; }
+  .topo--aberto .menu__lista li:nth-child(3) { animation-delay: .1s; }
+  .topo--aberto .menu__lista li:nth-child(4) { animation-delay: .15s; }
+  .topo--aberto .menu__lista li:nth-child(5) { animation-delay: .2s; }
+  .topo--aberto .topo__barra::before { opacity: 0; }
+}
+
+/* ---------------------------------------------------------------- topo rolado menor
+   Ao sair do começo da página a barra encolhe: sobe pra perto da borda, as cápsulas ficam
+   mais baixas e o logo diminui (escala, na GPU). Escala na barra inteira deixava o painel do
+   submenu transparente, por isso cada peça muda sozinha. Só no computador.              */
+@media (min-width: 64em) {
+  .topo--rolado { padding-top: 10px; }
+  .topo__barra { transition: background-color .5s ease, box-shadow .5s ease, padding .45s var(--ease-out); }
+  .topo--rolado .topo__barra { padding: 6px; }
+  .menu__lista .pilula, .topo__zap { transition: min-height .45s var(--ease-out), padding .45s var(--ease-out), background-color .3s ease; }
+  .topo--rolado .menu__lista .pilula { min-height: 40px; }
+  .topo--rolado .topo__zap { min-height: 40px; padding-inline: 18px; }
+  .marca { transition: transform .45s var(--ease-out); }
+  .topo--rolado .marca { transform: scale(.8); }
+}
+
+/* ---------------------------------------------------------------- submenu "Soluções"
+   Computador: painel de vidro escuro abaixo da cápsula, com as 7 páginas de seguro em duas
+   colunas (ícone, nome e o que cobre). Abre no clique e, com mouse, ao passar por cima.
+   Celular: dentro do menu de tela cheia, abre como sanfona embaixo de "Soluções".       */
+.sub { position: relative; }
+.sub__botao { gap: 8px; cursor: pointer; }
+.sub__seta { width: 14px; height: 14px; transition: transform .35s var(--ease-out); }
+.sub--aberta .sub__seta { transform: rotate(180deg); }
+.sub:has([aria-current='page']) .sub__botao { background: linear-gradient(180deg, rgb(255 255 255 / .42), rgb(255 255 255 / .2)); }
+.sub__lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+.sub__item { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 20px; color: var(--branco); transition: background-color .25s ease; }
+.sub__item:hover, .sub__item:focus-visible { background: rgb(255 255 255 / .08); }
+.sub__item[aria-current='page'] { background: rgb(255 255 255 / .12); }
+.sub__icone { display: grid; flex: none; place-items: center; width: 44px; height: 44px; border: 1px solid rgb(255 255 255 / .14); border-radius: 50%; background: rgb(255 255 255 / .06); color: var(--verde-vivo); }
+.sub__icone .i { width: 22px; height: 22px; }
+.sub__txt { display: grid; gap: 3px; min-width: 0; }
+.sub__nome { font: 600 15px/1.2 var(--fonte); letter-spacing: -.01em; }
+.sub__desc { color: rgb(255 255 255 / .62); font-size: 12.5px; line-height: 1.35; }
+.sub__todas { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; padding: 16px 16px 8px; border-top: 1px solid rgb(255 255 255 / .12); color: var(--branco); font-size: 14px; font-weight: 600; }
+.sub__todas .i { width: 18px; height: 18px; transition: transform .3s var(--ease-out); }
+.sub__todas:hover .i { transform: translate3d(4px, 0, 0); }
+
+@media (min-width: 64em) {
+  .sub__painel {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 0;
+    width: 600px;
+    padding: 12px;
+    border: 1px solid rgb(255 255 255 / .14);
+    border-radius: 30px;
+    background: rgb(4 34 40);
+    /* camada própria: sem ela o Chrome deixava os cartões de baixo vazarem pelo painel */
+    isolation: isolate;
+    will-change: transform;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .1), 0 30px 60px -30px rgb(0 0 0 / .7);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, -8px, 0) scale(.98);
+    transform-origin: 30px 0;
+    transition: opacity .25s ease, transform .35s var(--ease-out), visibility 0s linear .35s;
+  }
+  /* ponte invisível entre a cápsula e o painel, pro mouse não fechar no caminho */
+  .sub__painel::before { content: ''; position: absolute; inset: -16px 0 auto; height: 16px; }
+  .sub--aberta .sub__painel { opacity: 1; visibility: visible; transform: none; transition: opacity .25s ease, transform .35s var(--ease-out); }
+}
+
+@media (max-width: 63.99em) {
+  .menu { overflow-y: auto; overscroll-behavior: contain; }
+  .sub__botao { justify-content: space-between; width: 100%; color: var(--branco); text-align: left; }
+  .sub__seta { width: 22px; height: 22px; }
+  .sub__painel { display: none; padding: 10px 0 14px; border-bottom: 1px solid var(--fio-escuro); }
+  .sub--aberta .sub__painel { display: block; animation: anim-desfoque .45s var(--anim-ease) both; }
+  .sub__lista { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .sub__item { gap: 12px; padding: 8px 0; border-radius: 0; }
+  .sub__item:hover, .sub__item[aria-current='page'] { background: none; }
+  .sub__item[aria-current='page'] .sub__nome { color: var(--verde-vivo); }
+  .sub__icone { width: 38px; height: 38px; }
+  .sub__icone .i { width: 19px; height: 19px; }
+  .sub__nome { font-size: 17px; font-weight: 500; }
+  .sub__desc { display: none; }
+  .sub__todas { margin-top: 6px; padding: 12px 0 0; }
+}
+
+/* ---------------------------------------------------------------- some ao descer, volta ao subir
+   Depois do hero, rolar pra baixo esconde o topo (sobe pra fora da tela) e qualquer rolada
+   pra cima traz de volta. Só transform. Com o menu do celular aberto ele nunca some: o
+   transform no .topo prenderia o menu de tela cheia dentro dele.                          */
+.topo { transition: transform .45s var(--ease-out), padding .45s var(--ease-out); }
+.topo--escondido:not(.topo--aberto) { transform: translate3d(0, calc(-100% - 24px), 0); }
+@media (prefers-reduced-motion: reduce) { .topo { transition: none; } }
+
+/* Tela de 1024 a 1439: as 5 cápsulas não cabem com o logo no centro. O logo vai pra esquerda,
+   o menu fica no meio e o botão vira só "WhatsApp". */
+@media (min-width: 64em) and (max-width: 89.99em) {
+  .topo__barra { grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; }
+  .marca { grid-column: 1; grid-row: 1; justify-self: start; width: 132px; margin-left: 10px; }
+  .menu { grid-column: 2; grid-row: 1; justify-self: center; }
+  .topo__zap { grid-column: 3; grid-row: 1; }
+  .topo__zap-pre { display: none; }
+}

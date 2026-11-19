@@ -1,0 +1,28 @@
+/* ---------------------------------------------------------------- sobre (Home e página Sobre)
+   Mockup aprovado: fundo petróleo da marca com brilho verde no canto. Texto à esquerda (título
+   em dois tons, dois parágrafos, os três atributos do brand book em vidro e o botão), o Paulo
+   à direita num cartão vertical, com o nome num vidro na base da foto.                     */
+.sobre__grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .82fr); align-items: center; gap: clamp(40px, 5vw, 96px); }
+.sobre__p { max-width: 34em; margin-top: 18px; color: var(--cor-texto); font-size: clamp(16px, .9rem + .25vw, 18.5px); line-height: 1.6; }
+.titulo + .sobre__p { margin-top: 26px; }
+.valores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 36px; }
+.valor { padding: 20px 20px 22px; border-radius: 20px; }
+.valor__t { font: 600 clamp(19px, .8rem + .6vw, 24px)/1.15 var(--fonte); letter-spacing: -.02em; }
+.valor__d { margin-top: 8px; color: rgb(255 255 255 / .78); font-size: 14.5px; line-height: 1.4; }
+.sobre__botao { margin-top: 34px; }
+.sobre__foto { position: relative; aspect-ratio: 4 / 5; border-radius: var(--raio-g); overflow: clip; box-shadow: 0 40px 80px -40px rgb(0 0 0 / .7); }
+.sobre__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.sobre__nome { position: absolute; left: 22px; bottom: 22px; display: grid; gap: 4px; padding: 16px 22px; border-radius: 20px; }
+.sobre__nome strong { font-size: clamp(16px, .8rem + .4vw, 20px); font-weight: 600; letter-spacing: -.01em; }
+.sobre__nome span { color: rgb(255 255 255 / .8); font-size: 14px; }
+@media (max-width: 63.99em) {
+  .sobre__grade { grid-template-columns: minmax(0, 1fr); }
+  .sobre__foto { order: -1; max-width: 520px; }
+}
+@media (max-width: 39.99em) {
+  .valores { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .valor { padding: 16px; }
+  .valor:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .valor__d { margin-top: 6px; font-size: 13.5px; }
+  .sobre__botao { width: 100%; }
+}

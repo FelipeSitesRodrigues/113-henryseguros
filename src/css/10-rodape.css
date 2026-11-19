@@ -1,0 +1,30 @@
+/* ---------------------------------------------------------------- rodapé (mockup aprovado)
+   Petróleo noite: logo e slogan, três colunas (Soluções, Contato, Siga) separadas por fios, e a
+   linha legal com razão social, CNPJ e SUSEP (obrigatório no site de corretora).          */
+.rodape { padding: clamp(56px, 5vw, 88px) 0 28px; background: var(--noite); color: rgb(255 255 255 / .8); font-size: 15px; }
+.rodape__grade { display: grid; grid-template-columns: 1.3fr 1fr 1.25fr .8fr; gap: 0; }
+.rodape__grade > * { padding-inline: clamp(16px, 2.4vw, 40px); border-left: 1px solid var(--fio-escuro); }
+.rodape__grade > :first-child { padding-left: 0; border-left: 0; }
+.rodape__logo { display: block; width: 210px; }
+.rodape__logo .logo { width: 100%; height: auto; }
+.rodape__slogan { max-width: 17em; margin-top: 22px; color: var(--branco); font-size: 17px; line-height: 1.45; }
+.rodape__titulo { margin-bottom: 18px; color: var(--branco); font: 600 17px/1.2 var(--fonte); }
+.rodape__col li { line-height: 1.4; }
+.rodape__col li + li { margin-top: 10px; }
+.rodape__col a { transition: color .25s ease; }
+.rodape__contato li, .rodape__contato a, .rodape__insta { display: flex; align-items: flex-start; gap: 12px; }
+.rodape__contato .i, .rodape__insta .i { width: 20px; height: 20px; margin-top: 1px; color: var(--branco); }
+.rodape__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 32px; margin-top: clamp(40px, 4vw, 64px); padding-top: 22px; border-top: 1px solid var(--fio-escuro); color: rgb(255 255 255 / .62); font-size: 13.5px; }
+.rodape__base a { color: var(--branco); }
+@media (hover: hover) {
+  .rodape__col a:hover, .rodape__base a:hover { color: var(--verde-vivo); }
+}
+@media (max-width: 63.99em) {
+  .rodape__grade { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+  .rodape__grade > * { padding-inline: 0; border-left: 0; }
+  .rodape__marca { grid-column: 1 / -1; }
+}
+@media (max-width: 39.99em) {
+  .rodape__grade { grid-template-columns: minmax(0, 1fr); }
+  .rodape__base { flex-direction: column; }
+}

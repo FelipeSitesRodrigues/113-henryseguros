@@ -1,0 +1,73 @@
+/* ---------------------------------------------------------------- hero
+   Mockup aprovado (v4): página off-white e o hero num cartão de foto arredondado com margem
+   clara em volta. Céu do pôr do sol, Paulo e o cliente à direita. Título branco, leve e
+   apertado no canto de baixo à esquerda (o Felipe pediu o bloco um pouco mais alto que no
+   mockup), a linha de apoio e os dois botões de vidro.
+   Celular (mockup mobile aprovado): a foto é o fundo do cartão inteiro, céu em cima com o
+   título, as duas pessoas na metade de baixo e os botões empilhados na base. A foto é
+   deitada: no celular ela entra larga (175vw), presa embaixo e à direita, e o céu de cima
+   continua num degradê da mesma cor.                                                      */
+.hero { padding: var(--respiro); background: var(--off); }
+.hero__cartao {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: max(620px, calc(100svh - var(--respiro) * 2));
+  border-radius: var(--raio-g);
+  overflow: clip;
+  background: linear-gradient(180deg, #12394B 0%, #1E5570 100%);
+  isolation: isolate;
+}
+.hero__foto { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; }
+/* véu pra leitura: escurece o canto do texto (esquerda e base), sem cobrir as pessoas */
+.hero__cartao::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgb(3 37 43 / .62) 0%, rgb(3 37 43 / .4) 38%, rgb(3 37 43 / .12) 54%, transparent 66%),
+    linear-gradient(0deg, rgb(3 37 43 / .42) 0%, transparent 38%),
+    linear-gradient(180deg, rgb(3 37 43 / .38) 0%, transparent 22%);
+}
+.hero__texto { width: min(1040px, 100%); padding: 0 0 clamp(56px, 13vh, 150px) clamp(28px, 4vw, 72px); color: var(--branco); }
+.hero__titulo { font: 400 clamp(44px, 1rem + 2.8vw, 64px)/1.04 var(--fonte); letter-spacing: -.045em; }
+/* duas linhas, pedido do Paulo: "Confiança em cada escolha," / "segurança em cada passo." (a quebra é o <br>) */
+@media (min-width: 64em) { .hero__titulo { white-space: nowrap; } }
+.hero__sub { max-width: 30em; margin-top: 22px; color: rgb(255 255 255 / .92); font-size: clamp(16px, .85rem + .4vw, 20px); line-height: 1.5; }
+.hero__botoes { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+.hero__botoes .btn--leve { padding-inline: 32px; }
+
+@media (max-width: 63.99em) {
+  .hero__cartao { align-items: stretch; min-height: max(640px, calc(100svh - var(--respiro) * 2)); }
+  /* a foto deitada fica larga, presa embaixo à direita; o céu de cima vem do degradê do
+     cartão, e a borda de cima da foto some numa máscara pra emenda não aparecer */
+  .hero__foto { inset: auto -14% 0 auto; width: 210%; max-width: none; height: auto; object-fit: initial; -webkit-mask: linear-gradient(180deg, transparent 0%, #000 14%); mask: linear-gradient(180deg, transparent 0%, #000 14%); }
+  .hero__cartao::before { background: linear-gradient(180deg, rgb(3 37 43 / .3) 0%, transparent 40%), linear-gradient(0deg, rgb(3 37 43 / .55) 0%, transparent 30%); }
+  .hero__texto { display: flex; flex-direction: column; width: 100%; padding: 116px 22px 22px; }
+  .hero__titulo { font-size: min(40px, 9.7vw); line-height: 1.02; }
+  .hero__sub { font-size: 16.5px; margin-top: 16px; }
+  .hero__botoes { flex-direction: column; gap: 12px; margin-top: auto; padding-top: 36vh; }
+  .hero__botoes .btn { width: 100%; }
+}
+@media (min-width: 40em) and (max-width: 63.99em) {
+  .hero__foto { width: 150%; right: -6%; }
+  .hero__titulo { font-size: 64px; }
+  .hero__botoes { flex-direction: row; }
+  .hero__botoes .btn { width: auto; flex: 1; }
+}
+
+/* Computador: o bloco do texto sobe pro meio do céu e fica nos ~44% da esquerda do cartão, sem
+   passar por cima das pessoas (pedido do Felipe, 2026-11-18). A foto ocupa sempre a largura
+   toda do cartão, presa embaixo: assim o homem da esquerda começa sempre em ~49% da largura,
+   em qualquer proporção de janela (com cover numa janela alta ela cortava os lados e as
+   pessoas andavam pra esquerda, pra baixo do texto). Sobrando altura, o céu continua em cima
+   num degradê da mesma cor do topo da foto, com a emenda apagada por máscara. A fonte do
+   título segue a largura do cartão (cqw): a frase mede sempre a mesma fração dele.       */
+@media (min-width: 64em) {
+  .hero__cartao { container-type: inline-size; align-items: center; background: linear-gradient(180deg, #003E52 0%, #01455C 100%); }
+  .hero__foto { inset: auto 0 0 auto; width: 100%; height: auto; object-fit: initial; -webkit-mask: linear-gradient(180deg, transparent 0, #000 12%); mask: linear-gradient(180deg, transparent 0, #000 12%); }
+  .hero__texto { width: 44cqw; padding: 96px 0 72px 4.6cqw; }
+  .hero__titulo { font-size: clamp(34px, 3.2cqw, 68px); line-height: 1.06; }
+  .hero__sub { max-width: 27em; }
+}

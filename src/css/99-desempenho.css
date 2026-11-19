@@ -1,0 +1,89 @@
+/* ---------------------------------------------------------------- desempenho (base do 076 ao 080)
+   content-visibility: o navegador só faz layout e pintura de cada seção abaixo do topo quando
+   ela chega perto da tela. Sem isso a Home montava tudo de uma vez (as letras dos títulos, o
+   vidro com desfoque, os cartões de foto) e o celular passava 2,3 s em estilo e layout.
+   A altura reservada é a do CONTEÚDO (o navegador soma o padding por cima, bug do 076),
+   medida pelo scripts/alturas.mjs em 1440, 1100, 800 e 390. Mudou muito uma seção? Rodar de
+   novo e atualizar aqui. A faixa das seguradoras, colada no hero, fica de fora (memória
+   cv-secao-vizinha-hero-lcp). No primeiro clique numa âncora o _base.js põe .cv-pronto e
+   tudo é desenhado de uma vez, pra rolagem parar no lugar certo.                         */
+.solucoes, .imob, .difs, .como, .sobre, .objs, .faq, .cta, .rodape, .pquem, .cobre, .porque, .sfim { content-visibility: auto; }
+.cv-pronto :is(.solucoes, .imob, .difs, .como, .sobre, .objs, .faq, .cta, .rodape, .pquem, .cobre, .porque, .sfim) { content-visibility: visible; }
+
+.solucoes { contain-intrinsic-size: auto 870px; }
+.imob { contain-intrinsic-size: auto 863px; }
+.difs { contain-intrinsic-size: auto 981px; }
+.como { contain-intrinsic-size: auto 810px; }
+.sobre { contain-intrinsic-size: auto 816px; }
+.objs { contain-intrinsic-size: auto 916px; }
+.faq { contain-intrinsic-size: auto 667px; }
+.cta { contain-intrinsic-size: auto 620px; }
+.rodape { contain-intrinsic-size: auto 348px; }
+.pquem { contain-intrinsic-size: auto 204px; }
+.cobre { contain-intrinsic-size: auto 484px; }
+.porque { contain-intrinsic-size: auto 205px; }
+.sfim { contain-intrinsic-size: auto 286px; }
+@media (max-width: 79.99em) {
+  .solucoes { contain-intrinsic-size: auto 947px; }
+  .imob { contain-intrinsic-size: auto 963px; }
+  .difs { contain-intrinsic-size: auto 772px; }
+  .como { contain-intrinsic-size: auto 619px; }
+  .sobre { contain-intrinsic-size: auto 641px; }
+  .objs { contain-intrinsic-size: auto 732px; }
+  .faq { contain-intrinsic-size: auto 690px; }
+  .cta { contain-intrinsic-size: auto 600px; }
+  .rodape { contain-intrinsic-size: auto 376px; }
+  .pquem { contain-intrinsic-size: auto 188px; }
+  .cobre { contain-intrinsic-size: auto 450px; }
+  .porque { contain-intrinsic-size: auto 204px; }
+  .sfim { contain-intrinsic-size: auto 284px; }
+}
+@media (max-width: 63.99em) {
+  .solucoes { contain-intrinsic-size: auto 2174px; }
+  .imob { contain-intrinsic-size: auto 1589px; }
+  .difs { contain-intrinsic-size: auto 1229px; }
+  .como { contain-intrinsic-size: auto 828px; }
+  .sobre { contain-intrinsic-size: auto 1384px; }
+  .objs { contain-intrinsic-size: auto 1454px; }
+  .faq { contain-intrinsic-size: auto 823px; }
+  .cta { contain-intrinsic-size: auto 980px; }
+  .rodape { contain-intrinsic-size: auto 705px; }
+  .pquem { contain-intrinsic-size: auto 281px; }
+  .cobre { contain-intrinsic-size: auto 610px; }
+  .porque { contain-intrinsic-size: auto 292px; }
+  .sfim { contain-intrinsic-size: auto 309px; }
+}
+@media (max-width: 39.99em) {
+  .solucoes { contain-intrinsic-size: auto 1302px; }
+  .imob { contain-intrinsic-size: auto 1399px; }
+  .difs { contain-intrinsic-size: auto 1304px; }
+  .como { contain-intrinsic-size: auto 926px; }
+  .sobre { contain-intrinsic-size: auto 1271px; }
+  .objs { contain-intrinsic-size: auto 1374px; }
+  .faq { contain-intrinsic-size: auto 863px; }
+  .cta { contain-intrinsic-size: auto 1000px; }
+  .rodape { contain-intrinsic-size: auto 940px; }
+  .pquem { contain-intrinsic-size: auto 433px; }
+  .cobre { contain-intrinsic-size: auto 638px; }
+  .porque { contain-intrinsic-size: auto 363px; }
+  .sfim { contain-intrinsic-size: auto 507px; }
+}
+
+/* Abertura: o Blur Fade (filter: blur animado) em cima de botão e cápsula de vidro, que já
+   têm backdrop-filter, custava ~850 ms de GPU no celular (Lighthouse, 2026-11-18). Ali a
+   entrada é só subida com opacidade; o desfoque fica no texto. */
+@keyframes anim-sobe { from { opacity: 0; transform: translate3d(0, 14px, 0); } }
+.js .topo__barra > *, .js .hero__botoes.anim-hero-texto, .js .ptopo__botoes.anim-hero-texto, .js .migalhas.anim-hero-texto { animation-name: anim-sobe; }
+
+/* Celular: o backdrop-filter em dezenas de vidros (widgets dos cartões, passos, coberturas,
+   atributos) pesava na GPU e no tempo de bloqueio (teste A/B, +7 no Lighthouse). Ali o vidro
+   fica sem desfoque e um pouco mais opaco; o topo e os botões do hero mantêm o vidro de verdade. */
+@media (max-width: 63.99em) {
+  .card__widget, .card__zap, .card__seta, .passo, .cob, .valor, .sobre__nome, .dif, .sfim__lista .pilula, .cta__painel {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .card__widget, .card__zap, .card__seta { background: rgb(14 40 46 / .55); }
+  .passo { background: rgb(8 34 38 / .62); }
+  .cta__painel { background: rgb(10 48 62 / .5); }
+}

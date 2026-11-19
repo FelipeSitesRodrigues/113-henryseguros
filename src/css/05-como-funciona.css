@@ -1,0 +1,77 @@
+/* ---------------------------------------------------------------- como funciona
+   Mockup aprovado: a seção inteira é a foto aérea da avenida em curva ao pôr do sol (o
+   slogan da marca, "segurança em cada passo"), com véu petróleo em cima pro título, e os 5
+   passos em vidro AO LONGO da avenida, ligados por uma linha pontilhada que segue a curva.
+   O palco tem a proporção da foto, então os pontos (em % do quadro) caem sempre na avenida.
+   Celular: os passos descem em lista, ligados por uma linha vertical.                   */
+.como { background: var(--noite); }
+.como__palco { position: relative; aspect-ratio: 1672 / 941; isolation: isolate; overflow: clip; color: var(--branco); }
+.como__foto { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.como__palco::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgb(3 37 43 / .9) 0%, rgb(3 37 43 / .55) 30%, rgb(3 37 43 / .12) 58%, rgb(3 37 43 / .3) 100%),
+    linear-gradient(90deg, rgb(3 37 43 / .45) 0%, transparent 45%);
+}
+.como__cab { position: absolute; left: var(--margem); top: clamp(56px, 6vw, 100px); width: min(640px, 48%); --cor-titulo: var(--branco); --cor-titulo-leve: rgb(255 255 255 / .62); --cor-texto: rgb(255 255 255 / .82); --cor-rotulo: rgb(255 255 255 / .86); }
+.como__cab .titulo { font-size: clamp(40px, 1rem + 3.4vw, 80px); }
+
+.como__caminho { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.como__caminho path { fill: none; stroke: rgb(255 255 255 / .85); stroke-width: 2.2PX; stroke-dasharray: 2 9; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+.passos { position: absolute; inset: 0; pointer-events: none; }
+.passo {
+  position: absolute;
+  left: var(--px);
+  top: var(--py);
+  width: clamp(200px, 17vw, 300px);
+  padding: clamp(16px, 1.4vw, 24px);
+  border-radius: 22px;
+  translate: -50% calc(-100% - clamp(46px, 4.4vw, 76px));
+  pointer-events: auto;
+}
+/* o ponto na avenida e a haste até o cartão */
+.passo::before, .passo::after { content: ''; position: absolute; left: 50%; pointer-events: none; }
+.passo::after { top: 100%; width: 1.5PX; height: clamp(38px, 3.8vw, 66px); margin-left: -.75PX; background: linear-gradient(180deg, rgb(255 255 255 / .7), rgb(255 255 255 / .35)); }
+.passo::before { top: calc(100% + clamp(38px, 3.8vw, 66px)); width: 18px; height: 18px; margin-left: -9px; border: 3px solid rgb(255 255 255 / .9); border-radius: 50%; background: rgb(255 200 140 / .55); box-shadow: 0 0 0 6px rgb(255 255 255 / .12), 0 0 22px 6px rgb(255 190 120 / .55); }
+.passo--fim::before { border-color: #C9FFE6; background: var(--verde-vivo); box-shadow: 0 0 0 6px rgb(63 203 149 / .2), 0 0 26px 8px rgb(63 203 149 / .7); }
+.passo__n { display: block; color: rgb(255 255 255 / .62); font: 300 clamp(34px, 1rem + 1.8vw, 52px)/1 var(--fonte); letter-spacing: -.03em; }
+.passo__t { margin-top: 8px; font: 600 clamp(18px, .6rem + .8vw, 26px)/1.1 var(--fonte); letter-spacing: -.025em; }
+.passo__d { margin-top: 8px; color: rgb(255 255 255 / .88); font-size: clamp(13.5px, .55rem + .4vw, 16px); line-height: 1.4; }
+.como__botao { position: absolute; right: var(--margem); bottom: clamp(32px, 4vw, 64px); }
+
+@media (max-width: 79.99em) {
+  .passo { width: 17vw; }
+  .passo__d { font-size: 13px; }
+}
+
+/* ---------------------------------------------------------------- celular e tablet */
+@media (max-width: 63.99em) {
+  .como__palco { aspect-ratio: auto; min-height: 0; padding: var(--secao-y) var(--margem); }
+  .como__foto { object-position: 46% 50%; }
+  .como__palco::before { background: linear-gradient(180deg, rgb(3 37 43 / .92) 0%, rgb(3 37 43 / .6) 34%, rgb(3 37 43 / .55) 100%); }
+  .como__cab { position: static; width: auto; }
+  .como__caminho { display: none; }
+  .passos { position: relative; display: grid; gap: 14px; margin-top: 36px; padding-left: 34px; }
+  .passos::before { content: ''; position: absolute; left: 8px; top: 16px; bottom: 16px; border-left: 2PX dotted rgb(255 255 255 / .6); }
+  .passo { position: relative; left: auto; top: auto; width: auto; translate: none; }
+  .passo::after { display: none; }
+  .passo::before { top: 26px; left: -34px; width: 16px; height: 16px; margin-left: 1px; }
+  .passo__n { font-size: 30px; }
+  .como__botao { position: static; width: 100%; margin-top: 28px; }
+}
+/* celular: os passos em dois por linha, sem o fio pontilhado da lista (pedido do Felipe) */
+@media (max-width: 63.99em) {
+  .passos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding-left: 0; }
+  .passos::before, .passo::before { display: none; }
+  .passo:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (max-width: 39.99em) {
+  .passo { padding: 16px; }
+  .passo__n { font-size: 26px; }
+  .passo__t { font-size: 17px; }
+  .passo__d { font-size: 13.5px; }
+}

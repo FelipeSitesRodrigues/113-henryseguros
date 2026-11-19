@@ -1,0 +1,22 @@
+/* ---------------------------------------------------------------- objeções (Home)
+   Mockup aprovado: fundo off-white, título em dois tons e a foto da mulher na janela ao pôr do
+   sol à esquerda (com o botão de vidro na base), as quatro dúvidas à direita, separadas por
+   fios: a frase entre aspas em petróleo e a resposta embaixo.                              */
+.objs { background: var(--off); }
+.objs__grade { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); gap: clamp(40px, 5.5vw, 104px); align-items: start; }
+.objs__foto { position: relative; margin-top: clamp(28px, 3vw, 44px); aspect-ratio: 4 / 5; border-radius: var(--raio-g); overflow: clip; }
+.objs__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 30%; }
+.objs__botao { position: absolute; left: 20px; right: 20px; bottom: 20px; }
+.objs__lista { display: grid; align-self: center; }
+.obj { padding-block: clamp(26px, 2.6vw, 40px); border-bottom: 1px solid var(--fio-claro); }
+.obj:first-child { padding-top: 0; }
+.obj:last-child { border-bottom: 0; }
+.obj__q { position: relative; padding-left: 1.05em; color: var(--petroleo); font: 600 clamp(22px, .9rem + 1.2vw, 34px)/1.15 var(--fonte); letter-spacing: -.03em; }
+.obj__q::before { content: '\201C'; position: absolute; left: 0; top: -.06em; color: var(--verde); font-size: 1.3em; line-height: 1; }
+.obj__q::after { content: '\201D'; color: var(--cinza-titulo); }
+.obj__r { margin-top: 12px; padding-left: calc(1.05 * clamp(22px, .9rem + 1.2vw, 34px)); color: var(--texto-claro); font-size: clamp(15.5px, .85rem + .25vw, 18px); line-height: 1.55; }
+@media (max-width: 63.99em) {
+  .objs__grade { grid-template-columns: minmax(0, 1fr); }
+  .objs__foto { aspect-ratio: 4 / 4.2; max-width: 560px; }
+  .obj__r { padding-left: 0; }
+}

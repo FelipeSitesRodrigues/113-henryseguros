@@ -1,0 +1,49 @@
+    <section class="secao difs" id="diferenciais" aria-labelledby="difs-titulo">
+      <div class="difs__cab container">
+        <p class="rotulo" data-revela>Por que a Henry</p>
+        <h2 class="titulo" id="difs-titulo" data-palavras data-revela="palavras"><span class="titulo__leve">O que muda</span> <span class="titulo__forte">com a Henry.</span></h2>
+        <p class="apoio" data-revela style="--atraso:.2s">Seguro bom é o que funciona no dia em que você precisa.</p>
+      </div>
+
+      <div class="difs__palco" data-revela="zoom">
+        <div class="difs__janela">
+        <div class="difs__cena">
+          <img class="difs__foto" data-img="celular" sizes="(min-width: 64em) calc(100vw - 48px), 260vw" alt="" loading="lazy" decoding="async">
+          <!-- a conversa: HTML por cima da tela do celular da foto (posição em src/dados/celular.json) -->
+          <div class="chat" style="--x:{{cel.x}}%;--y:{{cel.y}}%;--w:{{cel.w}}%;--h:{{cel.h}}%" role="img" aria-label="Conversa no WhatsApp: o cliente avisa que bateu o carro e ninguém se machucou; o consultor da Henry responde que já acionou o guincho, que chega em 20 minutos, e que fica com a seguradora; o cliente agradece.">
+            <div class="chat__tela" aria-hidden="true">
+              <div class="chat__status"><span>18:44</span><span class="chat__ilha"></span><span class="chat__sinais"><i data-i="cell-signal-full" data-w="fill"></i><i data-i="wifi-high" data-w="bold"></i><i data-i="battery-high" data-w="fill"></i></span></div>
+              <div class="chat__topo">
+                <i data-i="arrow-left" data-w="regular" class="chat__voltar"></i>
+                <span class="chat__avatar"><img src="/assets/abertura/simbolo.webp" alt="" width="264" height="336" loading="lazy" decoding="async"></span>
+                <span class="chat__nome">Henry Seguros<small>online</small></span>
+                <span class="chat__acoes"><i data-i="video-camera" data-w="regular"></i><i data-i="phone" data-w="regular"></i><i data-i="dots-three-vertical" data-w="bold"></i></span>
+              </div>
+              <div class="chat__fundo">
+                <span class="chat__dia">Hoje</span>
+                <p class="chat__aviso"><i data-i="lock-simple" data-w="fill"></i>As mensagens e as ligações são protegidas com a criptografia de ponta a ponta.</p>
+                <ol class="chat__msgs" role="list">
+                  <li class="msg msg--eu msg--rabo" style="--m:0">Bati o carro agora. Ninguém se machucou.<span class="msg__hora">18:42<i data-i="checks" data-w="bold"></i></span></li>
+                  <li class="msg msg--ele msg--rabo" style="--m:1">Que bom que vocês estão bem. Já acionei o guincho, chega em 20 minutos.<span class="msg__hora">18:43</span></li>
+                  <li class="msg msg--ele" style="--m:2">A seguradora fica comigo. Te atualizo por aqui.<span class="msg__hora">18:43</span></li>
+                  <li class="msg msg--eu msg--rabo" style="--m:3">Que alívio. Obrigado!<span class="msg__hora">18:44<i data-i="checks" data-w="bold"></i></span></li>
+                </ol>
+              </div>
+              <div class="chat__base">
+                <span class="chat__campo"><i data-i="smiley" data-w="regular"></i><span>Mensagem</span><i data-i="paperclip" data-w="regular"></i><i data-i="camera" data-w="regular"></i></span>
+                <span class="chat__mic"><i data-i="microphone" data-w="fill"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <ul class="difs__lista" role="list">
+          <li class="dif vidro" data-revela="grade" style="--i:0"><i data-i="user" data-w="light" class="dif__i"></i><div><h3 class="dif__t">Consultor com nome</h3><p class="dif__d">Você fala sempre com a mesma pessoa.</p></div></li>
+          <li class="dif vidro" data-revela="grade" style="--i:1"><i data-i="scales" data-w="light" class="dif__i"></i><div><h3 class="dif__t">Comparação entre seguradoras</h3><p class="dif__d">Mostramos a diferença real entre as propostas.</p></div></li>
+          <li class="dif vidro" data-revela="grade" style="--i:1"><i data-i="truck" data-w="light" class="dif__i"></i><div><h3 class="dif__t">Sinistro com a gente</h3><p class="dif__d">Cuidamos da papelada até o fim.</p></div></li>
+          <li class="dif vidro" data-revela="grade" style="--i:2"><i data-i="calendar-check" data-w="light" class="dif__i"></i><div><h3 class="dif__t">Revisão todo ano</h3><p class="dif__d">Sua apólice acompanha a sua vida.</p></div></li>
+          <li class="dif vidro" data-revela="grade" style="--i:3"><i data-i="note-pencil" data-w="light" class="dif__i"></i><div><h3 class="dif__t">Sem juridiquês</h3><p class="dif__d">Você sabe o que está coberto antes de assinar.</p></div></li>
+        </ul>
+      </div>
+    </section>

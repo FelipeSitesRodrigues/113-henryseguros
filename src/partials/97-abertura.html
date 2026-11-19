@@ -1,0 +1,19 @@
+    <!-- abertura (modelo da 0105 Ston e da 0104 Lume): tela petróleo, o símbolo das folhas gira
+         e cresce, as letras de "Henry" entram alternando, o fio verde acende e "SEGUROS" sobe; a
+         tela sai pra cima com a borda curva e revela o hero. ~1,6 s, só transform e opacity.
+         Uma vez por visita (sessionStorage): quem volta pra Home não espera de novo. -->
+    <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('henry-abriu')){document.documentElement.classList.add('abre');sessionStorage.setItem('henry-abriu','1')}}catch(e){}</script>
+    <div class="abertura" aria-hidden="true" data-abertura>
+      <div class="abertura__marca">
+        <div class="abertura__logo">
+          <img class="abertura__p abertura__p--simbolo" src="/assets/abertura/simbolo.webp" alt="" width="264" height="336">
+          <img class="abertura__p abertura__p--h" src="/assets/abertura/h.webp" alt="" width="149" height="171">
+          <img class="abertura__p abertura__p--e" src="/assets/abertura/e.webp" alt="" width="131" height="137">
+          <img class="abertura__p abertura__p--n" src="/assets/abertura/n.webp" alt="" width="126" height="137">
+          <img class="abertura__p abertura__p--r" src="/assets/abertura/r.webp" alt="" width="95" height="134">
+          <img class="abertura__p abertura__p--y" src="/assets/abertura/y.webp" alt="" width="142" height="158">
+          <img class="abertura__p abertura__p--seguros" src="/assets/abertura/seguros.webp" alt="" width="229" height="37">
+        </div>
+        <span class="abertura__fio"></span>
+      </div>
+    </div>

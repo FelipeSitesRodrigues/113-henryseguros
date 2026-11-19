@@ -1,0 +1,71 @@
+{
+ "_sobre": "Páginas fixas. As 7 de seguro saem do src/dados/solucoes.json no build.mjs, com as seções sol-*. Gerado por scripts/dados.py.",
+ "itens": [
+  {
+   "id": "home",
+   "nome": "Início",
+   "arquivo": "index.html",
+   "rota": "/",
+   "titulo": "Henry Seguros | Corretora de Seguros em Alphaville",
+   "descricao": "Corretora de seguros em Alphaville com consultor dedicado. Auto, residencial, empresarial, frota e fiança nas principais seguradoras.",
+   "ogTitulo": "Henry Seguros | Um consultor seu, não uma central",
+   "ogDescricao": "Corretora de seguros em Alphaville, Barueri. Auto, residencial, empresarial, frota, fiança, capitalização e responsabilidade civil nas principais seguradoras.",
+   "ogAlt": "Paulo, fundador da Henry Seguros, apertando a mão de um cliente ao pôr do sol",
+   "zap": "consultor",
+   "tipoSchema": "WebPage",
+   "paulo": true,
+   "secoes": [
+    "97-abertura",
+    "01-hero",
+    "02-seguradoras",
+    "03-solucoes",
+    "03b-imobiliarias",
+    "04-diferenciais",
+    "05-como-funciona",
+    "06-sobre",
+    "07-objecoes",
+    "08-faq",
+    "09-cta"
+   ]
+  },
+  {
+   "id": "sobre",
+   "nome": "Sobre",
+   "arquivo": "sobre.html",
+   "rota": "/sobre",
+   "titulo": "Sobre a Henry Seguros | Corretora em Alphaville",
+   "descricao": "Conheça a Henry Seguros, corretora em Alphaville desde 2022, e o fundador, Paulo Henrique de Oliveira. Um consultor seu, não uma central.",
+   "ogTitulo": "Sobre a Henry Seguros | Uma corretora feita de gente",
+   "ogDescricao": "Desde 2022 em Alphaville, protegendo famílias e empresas com um consultor de verdade do lado.",
+   "ogAlt": "Paulo Henrique de Oliveira, fundador da Henry Seguros, na varanda do escritório em Alphaville",
+   "zap": "paulo",
+   "tipoSchema": "AboutPage",
+   "paulo": true,
+   "secoes": [
+    "sob-topo",
+    "06-sobre",
+    "04-diferenciais",
+    "02-seguradoras",
+    "05-como-funciona",
+    "09-cta"
+   ]
+  },
+  {
+   "id": "privacidade",
+   "nome": "Política de Privacidade",
+   "arquivo": "privacidade.html",
+   "rota": "/privacidade",
+   "titulo": "Política de Privacidade | Henry Seguros",
+   "descricao": "Como a Henry Seguros, corretora em Alphaville, trata os dados de quem pede cotação pelo site, conforme a LGPD.",
+   "ogTitulo": "Política de Privacidade | Henry Seguros",
+   "ogDescricao": "Como a Henry Seguros trata os seus dados, conforme a LGPD.",
+   "ogAlt": "Henry Seguros",
+   "zap": "duvida",
+   "tipoSchema": "WebPage",
+   "secoes": [
+    "priv-texto",
+    "09-cta"
+   ]
+  }
+ ]
+}
