@@ -1,0 +1,3 @@
+/* ---------------------------------------------------------------- /blog: a lista de artigos */
+.blogl { background: var(--off); padding-top: clamp(40px, 4vw, 72px); }
+.blista__vazio { max-width: 34em; margin-inline: auto; padding: 40px 0; color: var(--texto-claro); font-size: 17px; text-align: center; }

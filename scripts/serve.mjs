@@ -39,7 +39,8 @@ createServer(async (req, res) => {
     let arq = path.join(DIST, rota)
     if (!arq.startsWith(DIST)) throw Object.assign(new Error('fora'), { code: 'ENOENT' })
     const st = await stat(arq).catch(() => null)
-    if (st?.isDirectory()) arq = path.join(arq, 'index.html')
+    // /blog com blog.html e a pasta blog/ (dos artigos): a Vercel serve o blog.html
+    if (st?.isDirectory()) arq = (await stat(arq + '.html').catch(() => null)) ? arq + '.html' : path.join(arq, 'index.html')
     // URL limpa, como a Vercel (cleanUrls): /solucoes serve solucoes.html
     else if (!st && !path.extname(arq)) arq += '.html'
     let corpo = await readFile(arq)

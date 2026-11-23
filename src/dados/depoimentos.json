@@ -1,0 +1,40 @@
+{
+ "_sobre": "Depoimentos das imobiliárias parceiras (padrão). O painel sobrescreve pela tabela conteudo, chave depoimentos. O 1º é o destaque.",
+ "itens": [
+  {
+   "nome": "Ricardo Borelli",
+   "empresa": "Lucarelli",
+   "texto": "Com a Henry, o seguro fiança deixou de travar a locação. A análise sai rápido e a gente sempre sabe com quem falar."
+  },
+  {
+   "nome": "Thayane",
+   "empresa": "Sequóia Gestão",
+   "texto": "Ter um consultor fixo para a nossa carteira faz diferença. Qualquer dúvida de inquilino ou proprietário é resolvida no WhatsApp, sem protocolo."
+  },
+  {
+   "nome": "Kawan",
+   "empresa": "Vedimoveis",
+   "texto": "Fechamos mais contratos sem fiador desde que começamos com a Henry. O inquilino entende a proposta e o proprietário fica tranquilo."
+  },
+  {
+   "nome": "Bruno",
+   "empresa": "Shark",
+   "texto": "Parceria séria e ágil. A Henry compara as seguradoras e traz a melhor opção para cada inquilino, sem complicar o processo."
+  },
+  {
+   "nome": "Juliana",
+   "empresa": "RRIMOVEIS",
+   "texto": "Eles explicam cada cobertura de forma clara, para nós e para o cliente. Isso passa confiança e acelera a assinatura do contrato."
+  },
+  {
+   "nome": "Ronaldo",
+   "empresa": "Next Demand",
+   "texto": "Quando surge qualquer problema no contrato, a Henry acompanha até o fim. Para a imobiliária, isso faz toda a diferença."
+  },
+  {
+   "nome": "Leonardo",
+   "empresa": "Wlevitt",
+   "texto": "Resposta rápida, atendimento próximo e muito profissionalismo. A Henry virou parte do nosso processo de locação."
+  }
+ ]
+}

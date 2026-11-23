@@ -8,3 +8,6 @@ referencias/
 
 # credenciais (Supabase do painel e do blog)
 .env*
+
+# o site é gerado na Vercel a cada publicação (lê o Supabase); dist/ não vai mais no git
+dist/

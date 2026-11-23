@@ -1,0 +1,323 @@
+{
+ "_sobre": "Textos que o Paulo edita no painel. O padrão é o texto que está no HTML (data-t=\"chave\" no parcial); o build confere se cada chave existe.",
+ "itens": [
+  {
+   "chave": "hero.titulo",
+   "rotulo": "Título principal (H1, importante pro Google)",
+   "grupo": "Início · Topo",
+   "tipo": "linha"
+  },
+  {
+   "chave": "hero.sub",
+   "rotulo": "Texto abaixo do título",
+   "grupo": "Início · Topo",
+   "tipo": "texto"
+  },
+  {
+   "chave": "solucoes.leve",
+   "rotulo": "Título (parte clara)",
+   "grupo": "Início · Soluções",
+   "tipo": "linha"
+  },
+  {
+   "chave": "solucoes.forte",
+   "rotulo": "Título (parte forte)",
+   "grupo": "Início · Soluções",
+   "tipo": "linha"
+  },
+  {
+   "chave": "solucoes.apoio",
+   "rotulo": "Texto de apoio",
+   "grupo": "Início · Soluções",
+   "tipo": "texto"
+  },
+  {
+   "chave": "imob.leve",
+   "rotulo": "Título (parte clara)",
+   "grupo": "Início · Imobiliárias",
+   "tipo": "linha"
+  },
+  {
+   "chave": "imob.forte",
+   "rotulo": "Título (parte forte)",
+   "grupo": "Início · Imobiliárias",
+   "tipo": "linha"
+  },
+  {
+   "chave": "imob.apoio",
+   "rotulo": "Texto de apoio",
+   "grupo": "Início · Imobiliárias",
+   "tipo": "texto"
+  },
+  {
+   "chave": "deps.leve",
+   "rotulo": "Título (parte clara)",
+   "grupo": "Início · Depoimentos",
+   "tipo": "linha"
+  },
+  {
+   "chave": "deps.forte",
+   "rotulo": "Título (parte forte)",
+   "grupo": "Início · Depoimentos",
+   "tipo": "linha"
+  },
+  {
+   "chave": "deps.apoio",
+   "rotulo": "Texto de apoio",
+   "grupo": "Início · Depoimentos",
+   "tipo": "texto"
+  },
+  {
+   "chave": "como.leve",
+   "rotulo": "Título (parte clara)",
+   "grupo": "Início · Como funciona",
+   "tipo": "linha"
+  },
+  {
+   "chave": "como.forte",
+   "rotulo": "Título (parte forte)",
+   "grupo": "Início · Como funciona",
+   "tipo": "linha"
+  },
+  {
+   "chave": "como.apoio",
+   "rotulo": "Texto de apoio",
+   "grupo": "Início · Como funciona",
+   "tipo": "texto"
+  },
+  {
+   "chave": "como.passo1.titulo",
+   "rotulo": "Passo 1: título",
+   "grupo": "Início · Como funciona",
+   "tipo": "linha"
+  },
+  {
+   "chave": "como.passo1.texto",
+   "rotulo": "Passo 1: texto",
+   "grupo": "Início · Como funciona",
+   "tipo": "texto"
+  },
+  {
+   "chave": "como.passo2.titulo",
+   "rotulo": "Passo 2: título",
+   "grupo": "Início · Como funciona",
+   "tipo": "linha"
+  },
+  {
+   "chave": "como.passo2.texto",
+   "rotulo": "Passo 2: texto",
+   "grupo": "Início · Como funciona",
+   "tipo": "texto"
+  },
+  {
+   "chave": "como.passo3.titulo",
+   "rotulo": "Passo 3: título",
+   "grupo": "Início · Como funciona",
+   "tipo": "linha"
+  },
+  {
+   "chave": "como.passo3.texto",
+   "rotulo": "Passo 3: texto",
+   "grupo": "Início · Como funciona",
+   "tipo": "texto"
+  },
+  {
+   "chave": "como.passo4.titulo",
+   "rotulo": "Passo 4: título",
+   "grupo": "Início · Como funciona",
+   "tipo": "linha"
+  },
+  {
+   "chave": "como.passo4.texto",
+   "rotulo": "Passo 4: texto",
+   "grupo": "Início · Como funciona",
+   "tipo": "texto"
+  },
+  {
+   "chave": "como.passo5.titulo",
+   "rotulo": "Passo 5: título",
+   "grupo": "Início · Como funciona",
+   "tipo": "linha"
+  },
+  {
+   "chave": "como.passo5.texto",
+   "rotulo": "Passo 5: texto",
+   "grupo": "Início · Como funciona",
+   "tipo": "texto"
+  },
+  {
+   "chave": "sobre.leve",
+   "rotulo": "Título (parte clara)",
+   "grupo": "Início · Sobre",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sobre.forte",
+   "rotulo": "Título (parte forte)",
+   "grupo": "Início · Sobre",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sobre.p1",
+   "rotulo": "Parágrafo 1",
+   "grupo": "Início · Sobre",
+   "tipo": "texto"
+  },
+  {
+   "chave": "sobre.p2",
+   "rotulo": "Parágrafo 2",
+   "grupo": "Início · Sobre",
+   "tipo": "texto"
+  },
+  {
+   "chave": "sobre.valor1.titulo",
+   "rotulo": "Valor 1: palavra",
+   "grupo": "Início · Sobre",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sobre.valor1.texto",
+   "rotulo": "Valor 1: frase",
+   "grupo": "Início · Sobre",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sobre.valor2.titulo",
+   "rotulo": "Valor 2: palavra",
+   "grupo": "Início · Sobre",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sobre.valor2.texto",
+   "rotulo": "Valor 2: frase",
+   "grupo": "Início · Sobre",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sobre.valor3.titulo",
+   "rotulo": "Valor 3: palavra",
+   "grupo": "Início · Sobre",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sobre.valor3.texto",
+   "rotulo": "Valor 3: frase",
+   "grupo": "Início · Sobre",
+   "tipo": "linha"
+  },
+  {
+   "chave": "objs.leve",
+   "rotulo": "Título (parte clara)",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "linha"
+  },
+  {
+   "chave": "objs.forte",
+   "rotulo": "Título (parte forte)",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "linha"
+  },
+  {
+   "chave": "objs.1.frase",
+   "rotulo": "Dúvida 1: o que o cliente pensa",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "linha"
+  },
+  {
+   "chave": "objs.1.resposta",
+   "rotulo": "Dúvida 1: resposta",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "texto"
+  },
+  {
+   "chave": "objs.2.frase",
+   "rotulo": "Dúvida 2: o que o cliente pensa",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "linha"
+  },
+  {
+   "chave": "objs.2.resposta",
+   "rotulo": "Dúvida 2: resposta",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "texto"
+  },
+  {
+   "chave": "objs.3.frase",
+   "rotulo": "Dúvida 3: o que o cliente pensa",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "linha"
+  },
+  {
+   "chave": "objs.3.resposta",
+   "rotulo": "Dúvida 3: resposta",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "texto"
+  },
+  {
+   "chave": "objs.4.frase",
+   "rotulo": "Dúvida 4: o que o cliente pensa",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "linha"
+  },
+  {
+   "chave": "objs.4.resposta",
+   "rotulo": "Dúvida 4: resposta",
+   "grupo": "Início · Dúvidas sinceras",
+   "tipo": "texto"
+  },
+  {
+   "chave": "faq.leve",
+   "rotulo": "Título (parte clara)",
+   "grupo": "Início · Perguntas frequentes",
+   "tipo": "linha"
+  },
+  {
+   "chave": "faq.forte",
+   "rotulo": "Título (parte forte)",
+   "grupo": "Início · Perguntas frequentes",
+   "tipo": "linha"
+  },
+  {
+   "chave": "cta.titulo",
+   "rotulo": "Título",
+   "grupo": "Chamada final (todas as páginas)",
+   "tipo": "linha"
+  },
+  {
+   "chave": "cta.sub",
+   "rotulo": "Texto",
+   "grupo": "Chamada final (todas as páginas)",
+   "tipo": "texto"
+  },
+  {
+   "chave": "sob.etiqueta",
+   "rotulo": "Etiqueta acima do título",
+   "grupo": "Página Sobre · Topo",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sob.l1",
+   "rotulo": "Título (linha 1)",
+   "grupo": "Página Sobre · Topo",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sob.l2",
+   "rotulo": "Título (linha 2)",
+   "grupo": "Página Sobre · Topo",
+   "tipo": "linha"
+  },
+  {
+   "chave": "sob.sub",
+   "rotulo": "Texto abaixo do título",
+   "grupo": "Página Sobre · Topo",
+   "tipo": "texto"
+  },
+  {
+   "chave": "rodape.slogan",
+   "rotulo": "Frase do rodapé",
+   "grupo": "Rodapé",
+   "tipo": "linha"
+  }
+ ]
+}

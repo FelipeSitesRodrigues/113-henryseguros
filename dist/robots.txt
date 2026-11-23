@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /preview/
-Sitemap: https://www.henryseguros.com.br/sitemap.xml

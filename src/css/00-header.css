@@ -223,3 +223,11 @@
   .topo__zap { grid-column: 3; grid-row: 1; }
   .topo__zap-pre { display: none; }
 }
+/* Com o Blog no menu são 6 cápsulas: o logo só vai pro centro a partir de 1680 */
+@media (min-width: 90em) and (max-width: 104.99em) {
+  .topo__barra:has(.menu [href="/blog"]) { grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; }
+  .topo__barra:has(.menu [href="/blog"]) .marca { grid-column: 1; grid-row: 1; justify-self: start; width: 132px; margin-left: 10px; }
+  .topo__barra:has(.menu [href="/blog"]) .menu { grid-column: 2; grid-row: 1; justify-self: center; }
+  .topo__barra:has(.menu [href="/blog"]) .topo__zap { grid-column: 3; grid-row: 1; }
+  .topo__barra:has(.menu [href="/blog"]) .topo__zap-pre { display: none; }
+}

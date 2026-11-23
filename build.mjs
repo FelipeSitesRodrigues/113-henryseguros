@@ -34,6 +34,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as cheerio from 'cheerio'
 import { letras } from './scripts/letras.mjs'
+import { carregarCms, iniciarCacheCms, variantesCms, ehDoStorage } from './scripts/cms.mjs'
+import { limparPost, minutosDeLeitura, dataLonga, dataCurta, textoPuro } from './scripts/blog.mjs'
 
 const RAIZ = path.dirname(fileURLToPath(import.meta.url))
 const P = (...a) => path.join(RAIZ, ...a)
@@ -41,11 +43,54 @@ const DIST = P('dist')
 const cfg = JSON.parse(readFileSync(P('site.config.json'), 'utf8'))
 const ler = (arq) => JSON.parse(readFileSync(arq, 'utf8')).itens
 const solucoes = ler(P('src/dados/solucoes.json'))
-const faqGeral = ler(P('src/dados/faq.json'))
 const cel = JSON.parse(readFileSync(P('src/dados/celular.json'), 'utf8'))
 const manifesto = existsSync(P('src/assets/img/manifesto.json')) ? JSON.parse(readFileSync(P('src/assets/img/manifesto.json'), 'utf8')) : {}
 const avisos = []
 const BASE = (cfg.dominio || '').replace(/\/$/, '')
+
+// ---------------------------------------------------------------- conteúdo do painel (Supabase)
+// O que o Paulo muda no /painel sobrescreve o padrão do código. Na Vercel o build falha se o
+// Supabase não responder (fica no ar a versão anterior); no PC segue com o padrão e avisa.
+const NA_VERCEL = !!process.env.VERCEL
+const cms = await carregarCms({ cfg, obrigatorio: NA_VERCEL || process.argv.includes('--cms-obrigatorio'), avisos })
+iniciarCacheCms(RAIZ)
+const CONTATO = ['whatsapp', 'whatsappExibir', 'telefone', 'email', 'instagram', 'instagramUrl', 'endereco', 'bairro', 'cidade', 'uf', 'horario']
+const contatoPadrao = Object.fromEntries(CONTATO.map((k) => [k, cfg[k]]))
+if (cms.contato) {
+  for (const k of CONTATO) {
+    const v = typeof cms.contato[k] === 'string' ? cms.contato[k].trim() : ''
+    if (!v) continue
+    if (k === 'whatsapp' && !/^55\d{10,11}$/.test(v)) {
+      avisos.push(`cms: WhatsApp inválido no painel (${v}), mantido o do código`)
+      continue
+    }
+    cfg[k] = v
+  }
+}
+const lista = (v, campos) => (Array.isArray(v) ? v : []).filter((x) => x && campos.every((c) => typeof x[c] === 'string' && x[c].trim())).map((x) => Object.fromEntries(campos.map((c) => [c, x[c].trim()])))
+const faqPadrao = ler(P('src/dados/faq.json'))
+const faqGeral = lista(cms.faq, ['pergunta', 'resposta']).length ? lista(cms.faq, ['pergunta', 'resposta']) : faqPadrao
+const depoimentosPadrao = ler(P('src/dados/depoimentos.json'))
+const depoimentos = lista(cms.depoimentos, ['nome', 'empresa', 'texto']).length ? lista(cms.depoimentos, ['nome', 'empresa', 'texto']) : depoimentosPadrao
+const campos = ler(P('src/dados/campos.json'))
+const textos = cms.textos
+// imagens que o painel pode trocar (o celular do WhatsApp fica de fora: a conversa é posicionada
+// na tela da foto). A troca sai nas mesmas larguras e na mesma proporção da original.
+const IMAGENS_EDITAVEIS = [
+  { nome: 'hero', rotulo: 'Foto do topo', grupo: 'Página inicial' },
+  { nome: 'imob', rotulo: 'Foto da seção de imobiliárias', grupo: 'Página inicial' },
+  { nome: 'estrada', rotulo: 'Foto do "Como funciona"', grupo: 'Página inicial' },
+  { nome: 'paulo', rotulo: 'Foto do Paulo (Sobre)', grupo: 'Página inicial' },
+  { nome: 'mulher', rotulo: 'Foto das dúvidas sinceras', grupo: 'Página inicial' },
+  { nome: 'ceu', rotulo: 'Fundo da chamada final', grupo: 'Todas as páginas' },
+  { nome: 'sobre-topo', rotulo: 'Foto do topo', grupo: 'Página Sobre' },
+  ...solucoes.flatMap((s) => [
+    { nome: `topo-${s.id}`, rotulo: `${s.nome}: foto do topo`, grupo: 'Páginas de seguro' },
+    { nome: `card-${s.id}`, rotulo: `${s.nome}: foto do cartão na página inicial`, grupo: 'Páginas de seguro' },
+  ]),
+]
+const imgCms = {} // nome -> versões geradas da foto trocada no painel
+let posts = [] // posts publicados, já limpos e com as imagens processadas
 
 // páginas: as fixas e uma por seguro
 const SECOES_SEGURO = ['sol-topo', 'sol-entenda', 'sol-paraquem', 'sol-cobre', 'sol-passos', 'sol-porque', 'sol-faq', 'sol-fim']
@@ -206,7 +251,8 @@ function icone(nome, peso = 'light', classe = '') {
 }
 
 // ---------------------------------------------------------------- imagens (<picture> AVIF e WebP)
-function versoes(nome, ext) {
+function versoes(nome, ext, original = false) {
+  if (!original && imgCms[nome]) return imgCms[nome].filter((v) => v.arq.endsWith(`.${ext}`))
   return Object.entries(manifesto)
     .map(([arq, m]) => ({ arq, m, w: Number((arq.match(new RegExp(`^${nome}-(\\d+)\\.${ext}$`)) || [])[1]) }))
     .filter((v) => v.w)
@@ -247,6 +293,9 @@ function imagens(html, preloads) {
       return tag
     }
     if (lcp) preloads.push({ nome, sizes, desk, deskSizes, deskMedia })
+    // texto alternativo que o Paulo escreveu ao trocar a foto no painel
+    const altCms = imgCms[nome] && cms.imagens[nome]?.alt
+    if (typeof altCms === 'string' && altCms.trim() && /\salt="[^"]+"/.test(attrs)) attrs = attrs.replace(/\salt="[^"]*"/, ` alt="${esc(altCms.trim())}"`)
     const principal = [...vw].reverse().find((v) => v.w <= max) || vw[0]
     if (va.length) fontes.push(`<source type="image/avif" srcset="${srcset(va)}" sizes="${sizes}">`)
     const img = `<img src="/assets/img/${principal.arq}" srcset="${srcset(vw)}" sizes="${sizes}" width="${principal.m.w}" height="${principal.m.h}"${attrs}>`
@@ -293,6 +342,81 @@ const htmlSolucoesMenu = () =>
     .map((s) => `<li><a class="sub__item" href="${s.rota}" data-pag="${s.id}"><span class="sub__icone"><i data-i="${s.icone}" data-w="light"></i></span><span class="sub__txt"><span class="sub__nome">${esc(s.nome)}</span><span class="sub__desc">${esc(s.descricao)}</span></span></a></li>`)
     .join('\n                ')
 const htmlSolucoesRodape = () => solucoes.map((s) => `<li><a href="${s.rota}">${esc(s.nome)}</a></li>`).join('\n              ')
+
+// ---------------------------------------------------------------- depoimentos (painel ou padrão)
+// O 1º é o destaque (petróleo, duas colunas); a onda da entrada segue a coluna de cada cartão.
+const iniciais = (n) => n.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase()
+const htmlDepoimentos = () =>
+  depoimentos
+    .map(
+      (d, i) => `
+          <li class="dep" data-revela="grade" style="--i:${i === 0 ? 0 : (i + 1) % 4}">
+            <figure>
+              <blockquote class="dep__txt"><p>${esc(d.texto)}</p></blockquote>
+              <figcaption class="dep__quem"><span class="dep__ini" aria-hidden="true">${esc(iniciais(d.nome))}</span><span><span class="dep__nome">${esc(d.nome)}</span><span class="dep__emp">${esc(d.empresa)}</span></span></figcaption>
+            </figure>
+          </li>`,
+    )
+    .join('')
+
+// ---------------------------------------------------------------- blog
+// <picture> de uma imagem que veio do painel (versões geradas por variantesCms)
+function pictureCms(vs, { sizes, alt = '', classe = '', lcp = false }) {
+  const va = vs.filter((v) => v.arq.endsWith('.avif'))
+  const vw = vs.filter((v) => v.arq.endsWith('.webp'))
+  const maior = vw[vw.length - 1]
+  const carga = lcp ? ' fetchpriority="high"' : ' loading="lazy"'
+  return `<picture${classe ? ` class="${classe}"` : ''}>${va.length ? `<source type="image/avif" srcset="${srcset(va)}" sizes="${sizes}">` : ''}<img src="/assets/img/${maior.arq}" srcset="${srcset(vw)}" sizes="${sizes}" width="${maior.m.w}" height="${maior.m.h}" alt="${esc(alt)}"${carga} decoding="async"></picture>`
+}
+const TAM_BCARD = '(min-width: 80em) 400px, (min-width: 64em) 30vw, (min-width: 40em) 46vw, calc(100vw - 40px)'
+const bcard = (p, i, h = 'h2') => `
+          <li class="bcard" data-revela="grade" style="--i:${i % 3}">
+            <a class="bcard__link" href="/blog/${p.slug}">
+              <span class="bcard__foto">${p.capa ? pictureCms(p.capa, { sizes: TAM_BCARD }) : '<span class="bcard__sem-foto" aria-hidden="true"></span>'}</span>
+              <span class="bcard__meta"><span class="bcard__cat">${esc(p.categoria)}</span><time datetime="${p.dataIso}">${esc(p.dataTexto)}</time></span>
+              <${h} class="bcard__titulo">${esc(p.titulo)}</${h}>
+              ${p.resumo ? `<span class="bcard__resumo">${esc(p.resumo)}</span>` : ''}
+              <span class="bcard__mais">Ler artigo<i data-i="arrow-up-right" data-w="regular"></i></span>
+            </a>
+          </li>`
+const htmlBlogLista = () =>
+  posts.length
+    ? `<ul class="blista" role="list">${posts.map((p, i) => bcard(p, i)).join('')}\n        </ul>`
+    : `<p class="blista__vazio" data-revela>Os primeiros artigos chegam em breve. Enquanto isso, fale com a gente pelo WhatsApp.</p>`
+// Home: os 3 artigos mais novos, só quando já existe post publicado
+const htmlBlogHome = () =>
+  posts.length
+    ? `<section class="secao bhome" aria-labelledby="bhome-titulo">
+      <div class="container">
+        <div class="bhome__cab">
+          <div>
+            <p class="rotulo" data-revela>Blog</p>
+            <h2 class="titulo" id="bhome-titulo" data-palavras data-revela="palavras"><span class="titulo__leve">Seguro explicado</span> <span class="titulo__forte">sem letra miúda.</span></h2>
+          </div>
+          <a class="bhome__todos" href="/blog" data-revela>Ver todos os artigos<i data-i="arrow-right" data-w="regular"></i></a>
+        </div>
+        <ul class="blista" role="list">${posts.slice(0, 3).map((p, i) => bcard(p, i, 'h3')).join('')}
+        </ul>
+      </div>
+    </section>`
+    : ''
+// "Leia também": até 3 da mesma categoria primeiro, depois os mais novos
+function relacionados(post) {
+  const outros = posts.filter((p) => p.slug !== post.slug)
+  return [...outros.filter((p) => p.categoria === post.categoria), ...outros.filter((p) => p.categoria !== post.categoria)].slice(0, 3)
+}
+const htmlRelacionados = (post) => {
+  const rs = relacionados(post)
+  return rs.length
+    ? `<section class="secao brel" aria-labelledby="brel-titulo">
+      <div class="container">
+        <h2 class="titulo brel__titulo" id="brel-titulo"><span class="titulo__leve">Leia</span> <span class="titulo__forte">também.</span></h2>
+        <ul class="blista" role="list">${rs.map((p, i) => bcard(p, i, 'h3')).join('')}
+        </ul>
+      </div>
+    </section>`
+    : ''
+}
 
 // ---------------------------------------------------------------- faixa das seguradoras
 // Os logos numa cor só (petróleo), correndo em loop. Duas cópias da lista; a segunda é só
@@ -400,11 +524,31 @@ function schema(pag, faqItens) {
   const pagina = { '@type': pag.tipoSchema || 'WebPage', '@id': `${endereco}#pagina`, url: endereco, name: pag.titulo, description: pag.descricao, inLanguage: 'pt-BR', isPartOf: { '@id': id('site') }, about: { '@id': id('negocio') } }
   const grafo = [negocio, site, pagina]
   if (pag.rota !== '/') {
-    const migalhas = { '@type': 'BreadcrumbList', '@id': `${endereco}#migalhas`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Início', item: url('/') }, { '@type': 'ListItem', position: 2, name: pag.nome, item: endereco }] }
+    const niveis = [{ name: 'Início', item: url('/') }, ...(pag.post ? [{ name: 'Blog', item: url('/blog') }] : []), { name: pag.nome, item: endereco }]
+    const migalhas = { '@type': 'BreadcrumbList', '@id': `${endereco}#migalhas`, itemListElement: niveis.map((n, i) => ({ '@type': 'ListItem', position: i + 1, ...n })) }
     pagina.breadcrumb = { '@id': migalhas['@id'] }
     grafo.push(migalhas)
   }
   if (pag.seguro) grafo.push({ '@type': 'Service', '@id': `${endereco}#servico`, name: pag.seguro.nome, serviceType: pag.seguro.nome, description: pag.seguro.sub, provider: { '@id': id('negocio') }, areaServed: 'Alphaville, Barueri, SP' })
+  if (pag.post) {
+    const p = pag.post
+    grafo.push({
+      '@type': 'BlogPosting',
+      '@id': `${endereco}#artigo`,
+      headline: p.titulo.slice(0, 110),
+      description: pag.descricao,
+      datePublished: p.publicado_em,
+      dateModified: p.atualizado_em || p.publicado_em,
+      articleSection: p.categoria,
+      inLanguage: 'pt-BR',
+      mainEntityOfPage: { '@id': `${endereco}#pagina` },
+      ...(p.og ? { image: url(`/assets/img/${p.og}`) } : {}),
+      author: { '@id': id('paulo') },
+      publisher: { '@id': id('negocio') },
+    })
+    if (!pag.paulo) grafo.push(paulo)
+  }
+  if (pag.blog) pagina.mainEntity = { '@type': 'ItemList', itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: url(`/blog/${p.slug}`), name: p.titulo })) }
   if (pag.paulo) {
     grafo.push(paulo)
     if (pag.tipoSchema === 'AboutPage') pagina.mainEntity = { '@id': id('paulo') }
@@ -414,6 +558,17 @@ function schema(pag, faqItens) {
 }
 
 // ---------------------------------------------------------------- montagem de uma página
+const RE_TEXTO = /<(\w+)([^>]*?)\sdata-t="([\w.-]+)"([^>]*)>([\s\S]*?)<\/\1>/g
+// texto padrão de cada campo do painel, tirado do próprio parcial (pro painel mostrar e restaurar)
+function textosPadrao() {
+  const out = {}
+  for (const f of readdirSync(P('src/partials')).filter((f) => f.endsWith('.html'))) {
+    for (const m of readFileSync(P('src/partials', f), 'utf8').matchAll(RE_TEXTO))
+      out[m[3]] = m[5].replace(/<br\s*\/?>\s*/g, '\n').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim()
+  }
+  return out
+}
+
 function montar(pag, preview = null) {
   usados = new Map()
   let faqItens = null
@@ -437,6 +592,17 @@ function montar(pag, preview = null) {
         return ps[k] ?? ''
       })
     })
+  // textos do painel: elemento com data-t="chave" troca o miolo pelo texto do Paulo (quebra de
+  // linha vira <br> com espaço, porque no celular o <br> do título some)
+  html = html.replace(RE_TEXTO, (_, tag, a, k, b, dentro) => {
+    const v = textos[k]
+    const novo = typeof v === 'string' && v.trim() ? esc(v.trim()).replace(/\r?\n/g, '<br> ') : dentro
+    return `<${tag}${a}${b}>${novo}</${tag}>`
+  })
+  // link do Blog no menu e no rodapé só aparece com artigo publicado
+  html = html.replace(/<!--\s*@se-blog\s*-->([\s\S]*?)<!--\s*\/@se-blog\s*-->/g, (_, d) => (posts.length ? d : ''))
+  if (pag.post) html = html.replace(/\{\{post\.([\w-]+)\}\}/g, (_, k) => esc(pag.post[k] ?? ''))
+  if (pag.noindex) html = html.replace(/<meta name="robots" content="[^"]*">/, '<meta name="robots" content="noindex, follow">')
   html = html.replace(/[ \t]*<!--\s*@usa\s+([\w\s,-]+?)\s*-->\n?/g, (_, lista) => {
     for (const d of lista.split(/[\s,]+/).filter(Boolean)) {
       if (!existsSync(P('src/css', `${d}.css`)) && !existsSync(P('src/js', `${d}.js`))) avisos.push(`[${pag.id}] @usa ${d}: não existe css nem js com esse nome`)
@@ -445,6 +611,12 @@ function montar(pag, preview = null) {
     return ''
   })
   html = html
+    .replace('<!-- @depoimentos -->', htmlDepoimentos)
+    .replace('<!-- @blog-lista -->', htmlBlogLista)
+    .replace('<!-- @blog-home -->', htmlBlogHome)
+    .replace('<!-- @post-capa -->', () => (pag.post?.capa ? `<figure class="post__capa">${pictureCms(pag.post.capa, { sizes: '(min-width: 64em) 880px, calc(100vw - 40px)', alt: pag.post.capa_alt || pag.post.titulo, lcp: true })}</figure>` : ''))
+    .replace('<!-- @post-conteudo -->', () => pag.post?.html ?? '')
+    .replace('<!-- @post-relacionados -->', () => (pag.post ? htmlRelacionados(pag.post) : ''))
     .replace('<!-- @solucoes -->', htmlSolucoes)
     .replace('<!-- @solucoes-rodape -->', htmlSolucoesRodape)
     .replace('<!-- @solucoes-menu -->', htmlSolucoesMenu)
@@ -499,8 +671,8 @@ function montar(pag, preview = null) {
   html = html.replace(
     '<!-- @meta-dominio -->',
     BASE
-      ? `<link rel="canonical" href="${url(pag.rota)}">\n  <meta property="og:url" content="${url(pag.rota)}">\n  <meta property="og:image" content="${url('/assets/img/og-henry.jpg')}">`
-      : '<meta property="og:image" content="/assets/img/og-henry.jpg">',
+      ? `<link rel="canonical" href="${url(pag.rota)}">\n  <meta property="og:url" content="${url(pag.rota)}">\n  <meta property="og:image" content="${url(`/assets/img/${pag.post?.og || 'og-henry.jpg'}`)}">`
+      : `<meta property="og:image" content="/assets/img/${pag.post?.og || 'og-henry.jpg'}">`,
   )
   return html
 }
@@ -554,6 +726,108 @@ if (process.argv.includes('--publicar')) rmSync(DIST, { recursive: true, force: 
 copiarPasta(P('src/assets'), path.join(DIST, 'assets'))
 copiarPasta(P('src/raiz'), DIST)
 
+// fotos do site trocadas no painel: mesmas larguras e proporção da original
+for (const [nome, v] of Object.entries(cms.imagens)) {
+  if (!IMAGENS_EDITAVEIS.some((i) => i.nome === nome)) continue
+  if (!ehDoStorage(cfg, v?.url)) {
+    avisos.push(`cms: imagem ${nome} com endereço fora do Storage, ignorada`)
+    continue
+  }
+  const orig = versoes(nome, 'webp', true)
+  if (!orig.length) continue
+  const maior = orig[orig.length - 1].m
+  try {
+    imgCms[nome] = await variantesCms(v.url, { dist: DIST, nome, larguras: orig.map((o) => o.w), proporcao: maior.w / maior.h })
+  } catch (e) {
+    if (NA_VERCEL) throw e
+    avisos.push(`cms: imagem ${nome} não processada (${e.message})`)
+  }
+}
+
+// posts publicados: HTML limpo, capa em 16:9, og:image 1200x630 e as fotos do texto em <picture>
+const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/
+for (const p of cms.posts) {
+  if (!SLUG.test(p.slug)) {
+    avisos.push(`cms: post com slug inválido ignorado: ${p.slug}`)
+    continue
+  }
+  const post = { ...p, resumo: (p.resumo || '').trim(), categoria: p.categoria || 'Notícias' }
+  post.html = limparPost(p.conteudo, { ehDoStorage: (src) => ehDoStorage(cfg, src), titulo: p.titulo })
+  const data = p.publicado_em || p.atualizado_em || new Date().toISOString()
+  post.dataIso = dataCurta(data)
+  post.dataTexto = dataLonga(data)
+  post.minutos = minutosDeLeitura(post.html)
+  if (ehDoStorage(cfg, p.capa_url)) {
+    post.capa = await variantesCms(p.capa_url, { dist: DIST, nome: `blog-${p.slug}`, larguras: [480, 800, 1200, 1760], proporcao: 16 / 9 })
+    post.og = (await variantesCms(p.capa_url, { dist: DIST, nome: `og-${p.slug}`, larguras: [1200], proporcao: 1200 / 630, jpg: true })).og
+  }
+  const fotos = [...post.html.matchAll(/<img src="([^"]+)" alt="([^"]*)">/g)]
+  for (const [tag, src, alt] of fotos) {
+    const vs = await variantesCms(src.replace(/&amp;/g, '&'), { dist: DIST, nome: `blog-${p.slug}-foto`, larguras: [720, 1200, 1600] })
+    post.html = post.html.replace(tag, pictureCms(vs, { sizes: '(min-width: 64em) 760px, calc(100vw - 40px)', alt: alt.replace(/&quot;/g, '"').replace(/&amp;/g, '&') }))
+  }
+  posts.push(post)
+}
+const resumoDe = (p) => (p.seo_descricao || p.resumo || textoPuro(p.html)).replace(/\s+/g, ' ').trim()
+const corta = (s, n) => (s.length > n ? `${s.slice(0, n - 1).replace(/\s+\S*$/, '')}…` : s)
+paginas.push(
+  {
+    id: 'blog',
+    nome: 'Blog',
+    arquivo: 'blog.html',
+    rota: '/blog',
+    titulo: 'Blog da Henry Seguros | Seguros em Alphaville',
+    descricao: 'Notícias e dicas de seguro auto, residencial, empresarial e fiança, explicadas pela Henry Seguros, corretora em Alphaville, Barueri.',
+    ogTitulo: 'Blog da Henry Seguros',
+    ogDescricao: 'Seguro explicado sem letra miúda, por uma corretora de Alphaville.',
+    ogAlt: 'Henry Seguros',
+    zap: 'duvida',
+    tipoSchema: 'CollectionPage',
+    blog: true,
+    noindex: !posts.length,
+    secoes: ['blog-topo', 'blog-lista', '09-cta'],
+  },
+  ...posts.map((p) => ({
+    id: `post-${p.slug}`,
+    nome: p.titulo,
+    arquivo: `blog/${p.slug}.html`,
+    rota: `/blog/${p.slug}`,
+    titulo: corta(p.seo_titulo || `${p.titulo} | Henry Seguros`, 70),
+    descricao: corta(resumoDe(p), 158),
+    ogTitulo: p.seo_titulo || p.titulo,
+    ogDescricao: corta(resumoDe(p), 200),
+    ogAlt: p.capa_alt || p.titulo,
+    zap: 'duvida',
+    tipoSchema: 'WebPage',
+    post: p,
+    secoes: ['post', '09-cta'],
+  })),
+)
+
+// painel: copia a tela e grava o config.json que ela lê (chave pública, campos e padrões)
+copiarPasta(P('src/painel'), path.join(DIST, 'painel'))
+rmSync(path.join(DIST, 'painel/config.exemplo.json'), { force: true })
+{
+  const padrao = textosPadrao()
+  for (const c of campos) if (!(c.chave in padrao)) avisos.push(`painel: campo ${c.chave} sem data-t em nenhum parcial`)
+  const maiorWebp = (nome) => versoes(nome, 'webp', true).slice(-1)[0]
+  gravar(
+    path.join(DIST, 'painel/config.json'),
+    JSON.stringify({
+      url: cfg.cms?.url,
+      chave: cfg.cms?.chave,
+      site: BASE,
+      categorias: ['Notícias', 'Dicas', 'Seguro auto', 'Seguro residencial', 'Empresas', 'Imobiliárias'],
+      campos: campos.map((c) => ({ ...c, padrao: padrao[c.chave] ?? '' })),
+      imagens: IMAGENS_EDITAVEIS.filter((i) => maiorWebp(i.nome)).map((i) => {
+        const v = maiorWebp(i.nome)
+        return { ...i, padrao: `/assets/img/${v.arq}`, largura: v.m.w, altura: v.m.h }
+      }),
+      padroes: { contato: contatoPadrao, depoimentos: depoimentosPadrao, faq: faqPadrao },
+    }),
+  )
+}
+
 const kb = (s) => `${(Buffer.byteLength(s) / 1024).toFixed(1)} KB`
 if (!argPreview) {
   const hoje = new Date().toISOString().slice(0, 10)
@@ -564,8 +838,8 @@ if (!argPreview) {
     console.log(`ok dist/${pag.arquivo.padEnd(30)} ${kb(html).padStart(9)} (${usados.size} ícones)`)
   }
   verificarLinks()
-  gravar(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /preview/\n${BASE ? `Sitemap: ${BASE}/sitemap.xml\n` : ''}`)
-  if (BASE) gravar(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paginas.map((p) => `  <url><loc>${url(p.rota)}</loc><lastmod>${hoje}</lastmod></url>`).join('\n')}\n</urlset>\n`)
+  gravar(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /preview/\nDisallow: /painel/\n${BASE ? `Sitemap: ${BASE}/sitemap.xml\n` : ''}`)
+  if (BASE) gravar(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paginas.filter((p) => !p.noindex).map((p) => `  <url><loc>${url(p.rota)}</loc><lastmod>${p.post ? dataCurta(p.post.atualizado_em || p.post.publicado_em) : hoje}</lastmod></url>`).join('\n')}\n</urlset>\n`)
   for (const p of cfg.pendencias || []) avisos.push(`pendente: ${p}`)
   if (process.argv.includes('--publicar')) rmSync(path.join(DIST, 'preview'), { recursive: true, force: true })
 } else {

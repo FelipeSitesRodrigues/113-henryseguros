@@ -1,0 +1,38 @@
+/* ---------------------------------------------------------------- artigo do blog
+   Coluna de leitura de ~68 caracteres, capa larga subindo sobre a emenda do topo, títulos
+   internos em petróleo, citação com fio verde e a caixa do WhatsApp no fim do texto.      */
+.post__titulo { max-width: 20em; font-size: clamp(34px, 1rem + 2.6vw, 64px); font-weight: 500; line-height: 1.08; text-wrap: balance; }
+.post__meta { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 22px; color: rgb(255 255 255 / .82); font-size: 14.5px; }
+.post__corpo { display: grid; justify-items: center; padding-bottom: clamp(32px, 4vw, 64px); background: var(--off); }
+.post__capa { position: relative; width: min(880px, 100%); margin: clamp(-90px, -6vw, -40px) 0 0; overflow: clip; border: 6px solid var(--off); border-radius: 30px; background: var(--areia); box-shadow: 0 30px 60px -44px rgb(0 40 48 / .7); }
+.post__capa img { display: block; width: 100%; max-width: none; height: auto; }
+.btopo--post .ptopo__texto { padding-bottom: clamp(110px, 10vw, 150px); }
+.post__texto { width: min(720px, 100%); padding-top: clamp(32px, 4vw, 56px); color: var(--tinta); font-size: clamp(16.5px, .9rem + .3vw, 18.5px); line-height: 1.75; }
+.post__texto > * + * { margin-top: 1.1em; }
+.post__texto h2 { margin-top: 1.8em; color: var(--petroleo); font: 600 clamp(24px, 1rem + 1vw, 32px)/1.2 var(--fonte); letter-spacing: -.025em; }
+.post__texto h3 { margin-top: 1.6em; color: var(--petroleo); font: 600 clamp(20px, .95rem + .6vw, 24px)/1.25 var(--fonte); letter-spacing: -.02em; }
+.post__texto h4 { margin-top: 1.4em; font-weight: 600; }
+.post__texto a { color: var(--petroleo); text-decoration: underline; text-decoration-color: rgb(0 72 84 / .35); text-underline-offset: 3px; }
+.post__texto ul, .post__texto ol { padding-left: 1.3em; }
+.post__texto ul { list-style: disc; }
+.post__texto ol { list-style: decimal; }
+.post__texto li + li { margin-top: .4em; }
+.post__texto li::marker { color: var(--verde); }
+.post__texto blockquote { padding: 4px 0 4px 22px; border-left: 3px solid var(--verde); color: var(--petroleo); font-size: 1.08em; font-weight: 500; }
+.post__texto picture, .post__texto img { display: block; width: 100%; height: auto; border-radius: 20px; }
+.post__texto hr { border: 0; border-top: 1px solid var(--fio-claro); }
+.post__texto strong { font-weight: 600; }
+.post__fala { display: grid; justify-items: start; gap: 8px; width: min(720px, 100%); margin-top: clamp(36px, 4vw, 56px); padding: clamp(22px, 2.4vw, 32px); border-radius: 26px; background: var(--areia); }
+.post__fala-t { color: var(--tinta); font: 600 clamp(19px, .9rem + .5vw, 23px)/1.25 var(--fonte); letter-spacing: -.02em; }
+.post__fala-d { color: var(--texto-claro); font-size: 15.5px; line-height: 1.55; }
+.post__fala .btn { margin-top: 10px; }
+.brel { background: var(--off); padding-top: 0; }
+.brel__titulo { margin-bottom: clamp(24px, 2.6vw, 40px); font-size: clamp(30px, 1rem + 1.6vw, 44px); }
+.brel__titulo > span { display: inline; }
+@media (max-width: 63.99em) {
+  .btopo--post .ptopo__texto { padding-bottom: 80px; }
+}
+@media (max-width: 39.99em) {
+  .post__capa { border-width: 4px; border-radius: 22px; }
+  .post__fala .btn { width: 100%; white-space: normal; }
+}

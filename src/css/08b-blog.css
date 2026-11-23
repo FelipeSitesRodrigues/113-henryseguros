@@ -1,0 +1,8 @@
+/* ---------------------------------------------------------------- Home: os 3 artigos mais novos
+   Só aparece com post publicado. Título à esquerda, "Ver todos" à direita, os cartões do blog. */
+.bhome { background: var(--off); padding-top: clamp(24px, 2vw, 40px); }
+.bhome__cab { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 18px 32px; margin-bottom: clamp(28px, 3vw, 44px); }
+.bhome .titulo { margin-top: 14px; font-size: clamp(32px, 1rem + 2vw, 52px); }
+.bhome__todos { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border: 1px solid var(--fio-claro); border-radius: 999px; background: var(--branco); color: var(--petroleo); font-size: 15px; font-weight: 600; text-decoration: none; transition: border-color .3s var(--ease-out); }
+.bhome__todos .i { width: 17px; height: 17px; }
+@media (hover: hover) { .bhome__todos:hover { border-color: var(--petroleo); } }
