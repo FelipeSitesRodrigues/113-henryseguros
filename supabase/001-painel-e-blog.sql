@@ -130,6 +130,8 @@ insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_typ
 values ('midia', 'midia', true, 8388608, array['image/webp', 'image/jpeg', 'image/png', 'image/avif'])
 on conflict (id) do update set public = true, file_size_limit = excluded.file_size_limit, allowed_mime_types = excluded.allowed_mime_types;
 
+drop policy if exists "admin lista mídia" on storage.objects;
+create policy "admin lista mídia" on storage.objects for select to authenticated using (bucket_id = 'midia' and public.eh_admin());
 drop policy if exists "admin envia mídia" on storage.objects;
 create policy "admin envia mídia" on storage.objects for insert to authenticated with check (bucket_id = 'midia' and public.eh_admin());
 drop policy if exists "admin troca mídia" on storage.objects;
