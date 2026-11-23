@@ -1,0 +1,36 @@
+/* ---------------------------------------------------------------- depoimentos das imobiliárias
+   Fundo claro depois do cartão petróleo das imobiliárias. Título à esquerda, apoio à direita;
+   os 7 depoimentos numa grade de 4 colunas: o 1º em destaque (petróleo, ocupa duas), os outros
+   6 fecham 4 + 4 sem buraco; no tablet, destaque na linha toda e 3 linhas de 2. Celular: faixa que rola pro lado, um cartão e a ponta do
+   próximo, sem scroll-snap (o trilho com snap mexia no LCP em outros sites).          */
+.deps { background: var(--off); }
+.deps__cab { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 20px clamp(32px, 5vw, 96px); }
+.deps .titulo { margin-top: 14px; font-size: clamp(32px, 1rem + 2vw, 52px); }
+.deps__apoio { max-width: 30em; color: var(--texto-claro); font-size: clamp(15px, .85rem + .25vw, 17px); line-height: 1.55; }
+.deps__lista { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: clamp(28px, 3vw, 44px); }
+.dep { display: flex; padding: clamp(22px, 2vw, 30px); border: 1px solid var(--fio-claro); border-radius: 24px; background: var(--branco); box-shadow: 0 18px 40px -34px rgb(0 40 48 / .55); }
+.dep figure { display: flex; flex-direction: column; justify-content: space-between; width: 100%; margin: 0; }
+.dep:first-child { grid-column: span 2; border-color: transparent; background: radial-gradient(60% 90% at 100% 0%, rgb(22 165 117 / .3), transparent 70%), var(--petroleo); }
+.dep:first-child .dep__txt { color: var(--branco); font-size: clamp(18px, .9rem + .6vw, 24px); line-height: 1.45; letter-spacing: -.01em; }
+.dep:first-child .dep__txt::before { color: var(--verde-vivo); }
+.dep:first-child .dep__quem { border-color: rgb(255 255 255 / .16); }
+.dep:first-child .dep__ini { background: var(--branco); color: var(--petroleo); }
+.dep:first-child .dep__nome { color: var(--branco); }
+.dep:first-child .dep__emp { color: rgb(255 255 255 / .72); }
+.dep__txt { position: relative; margin: 0; padding-top: 34px; color: var(--tinta); font-size: clamp(15.5px, .85rem + .3vw, 17.5px); line-height: 1.55; }
+.dep__txt::before { content: '\201C'; position: absolute; top: -6px; left: -2px; color: var(--verde); font: 600 56px/1 var(--fonte); }
+.dep__quem { display: flex; align-items: center; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--fio-claro); }
+.dep__ini { display: grid; flex: none; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--petroleo); color: var(--branco); font: 600 14px/1 var(--fonte); letter-spacing: .02em; }
+.dep__nome { display: block; color: var(--tinta); font: 600 15.5px/1.25 var(--fonte); }
+.dep__emp { display: block; margin-top: 2px; color: var(--texto-claro); font-size: 14px; }
+
+@media (max-width: 63.99em) {
+  .deps__cab { grid-template-columns: minmax(0, 1fr); }
+  .deps__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 39.99em) {
+  .deps__lista { display: flex; gap: 10px; margin-inline: calc(var(--margem) * -1); padding: 2px var(--margem) 16px; overflow-x: auto; scrollbar-width: none; }
+  .deps__lista::-webkit-scrollbar { display: none; }
+  .dep { flex: none; width: min(84%, 320px); margin: 0; padding: 20px 18px; border-radius: 20px; }
+  .dep__txt, .dep:first-child .dep__txt { font-size: 15px; line-height: 1.55; }
+}

@@ -48,7 +48,7 @@ const avisos = []
 const BASE = (cfg.dominio || '').replace(/\/$/, '')
 
 // páginas: as fixas e uma por seguro
-const SECOES_SEGURO = ['sol-topo', 'sol-paraquem', 'sol-cobre', 'sol-porque', 'sol-faq', 'sol-fim']
+const SECOES_SEGURO = ['sol-topo', 'sol-entenda', 'sol-paraquem', 'sol-cobre', 'sol-passos', 'sol-porque', 'sol-faq', 'sol-fim']
 const paginas = [
   ...ler(P('src/paginas.json')),
   ...solucoes.map((s) => ({
@@ -64,7 +64,8 @@ const paginas = [
     zap: 'consultor',
     tipoSchema: 'WebPage',
     seguro: { cobreTitulo: ['O que pode', 'estar coberto.'], ...s },
-    secoes: SECOES_SEGURO,
+    // depoimentos das imobiliárias parceiras só onde o assunto é locação
+    secoes: ['fianca', 'capitalizacao'].includes(s.id) ? SECOES_SEGURO.flatMap((n) => (n === 'sol-faq' ? ['03c-depoimentos', n] : [n])) : SECOES_SEGURO,
   })),
 ]
 
@@ -321,6 +322,16 @@ const htmlSeguradoras = () =>
 const htmlParaQuem = (s) =>
   s.paraQuem.map(([ic, t, d], i) => `<li class="pq" data-revela="grade" style="--i:${i}">${icone(ic, 'light', 'pq__i')}<h3 class="pq__t">${esc(t)}</h3><p class="pq__d">${esc(d)}</p></li>`).join('')
 const htmlCobre = (s) => s.cobre.map(([ic, t], i) => `<li class="cob vidro" data-revela="grade" style="--i:${i % 3}">${icone(ic, 'light', 'cob__i')}<span>${esc(t)}</span></li>`).join('')
+// conteúdo extra (scripts/conteudo_seguros.py): o que é, o que pesa no preço, opcionais e passo a passo
+const htmlEntenda = (s) => (s.entenda || []).map((t, i) => `<p class="entenda__p" data-revela style="--atraso:${(0.15 + i * 0.1).toFixed(2)}s">${esc(t)}</p>`).join('')
+const htmlPreco = (s) =>
+  (s.preco || []).map(([ic, t, d], i) => `<li class="preco__item" data-revela="grade" style="--i:${i % 2}">${icone(ic, 'light', 'preco__i')}<div><h4 class="preco__t">${esc(t)}</h4><p class="preco__d">${esc(d)}</p></div></li>`).join('')
+const htmlExtras = (s) =>
+  s.extras?.length
+    ? `<div class="extras"><h3 class="extras__titulo" data-revela>Pra deixar sob medida</h3><ul class="extras__lista" role="list">${s.extras.map(([ic, t], i) => `<li class="extra" data-revela="grade" style="--i:${i % 3}">${icone(ic, 'light', 'extra__i')}<span>${esc(t)}</span></li>`).join('')}</ul><p class="extras__nota" data-revela>Coberturas e assistências opcionais. Disponibilidade e limites variam por seguradora.</p></div>`
+    : ''
+const htmlPassos = (s) =>
+  (s.passos || []).map(([t, d], i) => `<li class="spasso" data-revela="grade" style="--i:${i}"><span class="spasso__n" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h3 class="spasso__t">${esc(t)}</h3><p class="spasso__d">${esc(d)}</p></li>`).join('')
 const htmlPorque = (s) => s.porque.map((t, i) => `<li class="pqh" data-revela="grade" style="--i:${i}"><span class="pqh__n" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><p class="pqh__t">${esc(t)}</p></li>`).join('')
 const htmlOutros = (s) =>
   solucoes
@@ -440,6 +451,10 @@ function montar(pag, preview = null) {
     .replace('<!-- @seguradoras -->', htmlSeguradoras)
     .replace('<!-- @sol-paraquem -->', () => htmlParaQuem(s))
     .replace('<!-- @sol-cobre -->', () => htmlCobre(s))
+    .replace('<!-- @sol-extras -->', () => htmlExtras(s))
+    .replace('<!-- @sol-entenda -->', () => htmlEntenda(s))
+    .replace('<!-- @sol-preco -->', () => htmlPreco(s))
+    .replace('<!-- @sol-passos -->', () => htmlPassos(s))
     .replace('<!-- @sol-porque -->', () => htmlPorque(s))
     .replace('<!-- @sol-outros -->', () => htmlOutros(s))
     .replace('<!-- @faq-sol -->', () => {

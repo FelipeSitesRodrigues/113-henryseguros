@@ -106,7 +106,7 @@ PAG = [
          ogTitulo="Henry Seguros | Um consultor seu, não uma central",
          ogDescricao="Corretora de seguros em Alphaville, Barueri. Auto, residencial, empresarial, frota, fiança, capitalização e responsabilidade civil nas principais seguradoras.",
          ogAlt="Paulo, fundador da Henry Seguros, apertando a mão de um cliente ao pôr do sol", zap="consultor", tipoSchema="WebPage", paulo=True,
-         secoes=["97-abertura", "01-hero", "02-seguradoras", "03-solucoes", "03b-imobiliarias", "04-diferenciais", "05-como-funciona", "06-sobre", "07-objecoes", "08-faq", "09-cta"]),
+         secoes=["97-abertura", "01-hero", "02-seguradoras", "03-solucoes", "03b-imobiliarias", "03c-depoimentos", "04-diferenciais", "05-como-funciona", "06-sobre", "07-objecoes", "08-faq", "09-cta"]),
     dict(id="sobre", nome="Sobre", arquivo="sobre.html", rota="/sobre", titulo="Sobre a Henry Seguros | Corretora em Alphaville",
          descricao="Conheça a Henry Seguros, corretora em Alphaville desde 2022, e o fundador, Paulo Henrique de Oliveira. Um consultor seu, não uma central.",
          ogTitulo="Sobre a Henry Seguros | Uma corretora feita de gente",
@@ -119,6 +119,16 @@ PAG = [
          ogAlt="Henry Seguros", zap="duvida", tipoSchema="WebPage",
          secoes=["priv-texto", "09-cta"]),
 ]
+
+
+# conteúdo extra das páginas de seguro (scripts/conteudo_seguros.py): soma perguntas e cria os campos novos
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from conteudo_seguros import MAIS
+for item in S:
+    extra = dict(MAIS[item["id"]])
+    item["perguntas"] = item["perguntas"] + extra.pop("perguntas", [])
+    item.update(extra)
 
 
 def gravar(arq, obj):

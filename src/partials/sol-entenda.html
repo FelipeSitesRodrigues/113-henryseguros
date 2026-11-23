@@ -1,0 +1,16 @@
+    <!-- o que é o seguro, em português comum (bom pro Google e pras respostas de IA), e o que
+         pesa no preço ao lado. Texto em scripts/conteudo_seguros.py -->
+    <section class="secao entenda" aria-labelledby="entenda-titulo">
+      <div class="container entenda__grade">
+        <div class="entenda__texto">
+          <p class="rotulo" data-revela>Em poucas palavras</p>
+          <h2 class="titulo" id="entenda-titulo" data-palavras data-revela="palavras"><span class="titulo__leve">{{s.entendaTitulo.0}}</span> <span class="titulo__forte">{{s.entendaTitulo.1}}</span></h2>
+          <!-- @sol-entenda -->
+        </div>
+        <aside class="preco" aria-labelledby="preco-titulo" data-revela style="--atraso:.2s">
+          <h3 class="preco__titulo" id="preco-titulo">{{s.precoTitulo}}</h3>
+          <ul class="preco__lista" role="list"><!-- @sol-preco --></ul>
+          <p class="preco__nota">A gente explica cada item antes de você decidir.</p>
+        </aside>
+      </div>
+    </section>

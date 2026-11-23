@@ -5,3 +5,6 @@ revisao/
 lighthouse/
 # recortes do mockup: só o scripts/revisar.mjs usa, ficam na máquina
 referencias/
+
+# credenciais (Supabase do painel e do blog)
+.env*

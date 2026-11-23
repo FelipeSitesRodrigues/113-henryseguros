@@ -8,10 +8,10 @@
   "whatsapp": "5511946662511",
   "whatsappExibir": "(11) 94666-2511",
   "telefone": "+55 11 94666-2511",
-  "email": "pauloh@henryseguros.com.br",
+  "email": "contato@henryseguros.com.br",
   "instagram": "henry.seguros",
   "instagramUrl": "https://www.instagram.com/henry.seguros/",
-  "endereco": "Alameda Rio Negro, 1477, 5º andar",
+  "endereco": "Alameda Araguaia, 2190 - Sala 1001",
   "bairro": "Alphaville",
   "cidade": "Barueri",
   "uf": "SP",
@@ -26,7 +26,6 @@
     "servico": "Olá! Vim pelo site da Henry e gostaria de uma cotação de *{servico}*."
   },
   "pendencias": [
-    "depoimentos: nenhum real ainda (os do site antigo não entram). A seção fica fora até o Paulo mandar prints do Google ou mensagens de cliente",
     "conferir com o Paulo: 'revisão todo ano', 'retorno no mesmo dia útil' (FAQ) e a resposta 'você paga o preço da seguradora' (objeções)",
     "o nome Henry vem de Paulo Henrique? Se sim, uma linha na página Sobre",
     "domínio: o site novo vai no henryseguros.com.br (hoje o site antigo)? canonical, sitemap e og:image já apontam pra www.henryseguros.com.br"

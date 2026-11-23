@@ -1,0 +1,30 @@
+/* ---------------------------------------------------------------- o que é o seguro (páginas de seguro)
+   Pedido do Paulo (2026-11-19): páginas mais ricas em informação. Texto corrido à esquerda,
+   em português comum, e o cartão "o que pesa no preço" à direita. Celular: um embaixo do
+   outro, com os 4 fatores em dois por linha.                                              */
+.entenda { background: var(--off); padding-bottom: clamp(24px, 2vw, 40px); }
+.entenda__grade { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 96px); }
+.entenda .titulo { margin-top: 14px; font-size: clamp(32px, 1rem + 2vw, 52px); }
+.entenda__p { max-width: 36em; margin-top: 18px; color: var(--texto-claro); font-size: clamp(15.5px, .85rem + .3vw, 18px); line-height: 1.65; }
+.entenda__p:first-of-type { margin-top: 24px; color: var(--tinta); }
+
+.preco { padding: clamp(24px, 2.6vw, 40px); border: 1px solid var(--fio-claro); border-radius: 30px; background: var(--branco); box-shadow: 0 30px 60px -48px rgb(0 40 48 / .6); }
+.preco__titulo { color: var(--tinta); font: 600 clamp(19px, .9rem + .5vw, 24px)/1.2 var(--fonte); letter-spacing: -.02em; }
+.preco__lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.preco__item { display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 20px; background: var(--off); }
+.preco__i { width: 30px; height: 30px; color: var(--verde); }
+.preco__t { color: var(--tinta); font: 600 16.5px/1.25 var(--fonte); letter-spacing: -.01em; }
+.preco__d { margin-top: 4px; color: var(--texto-claro); font-size: 14px; line-height: 1.45; }
+.preco__nota { margin-top: 18px; color: var(--texto-claro); font-size: 14px; }
+
+@media (max-width: 63.99em) {
+  .entenda__grade { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 39.99em) {
+  .preco { padding: 20px 16px; border-radius: 24px; }
+  .preco__lista { gap: 10px; }
+  .preco__item { gap: 10px; padding: 14px; border-radius: 16px; }
+  .preco__i { width: 26px; height: 26px; }
+  .preco__t { font-size: 15px; }
+  .preco__d { font-size: 13px; }
+}

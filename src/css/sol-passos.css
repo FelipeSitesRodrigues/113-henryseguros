@@ -1,0 +1,24 @@
+/* ---------------------------------------------------------------- passo a passo (páginas de seguro)
+   O que acontece quando a pessoa precisa do seguro (ou, na fiança e na capitalização, do
+   pedido ao contrato). 4 cartões numerados em linha no computador, 2 por linha no celular.   */
+.spassos { background: var(--off); padding-bottom: clamp(24px, 2vw, 40px); }
+.spassos__cab { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 24px clamp(32px, 5vw, 96px); }
+.spassos .titulo { font-size: clamp(32px, 1rem + 2vw, 52px); }
+.spassos__apoio { max-width: 30em; color: var(--texto-claro); font-size: clamp(15px, .85rem + .25vw, 17px); line-height: 1.55; }
+.spassos__lista { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: clamp(28px, 3vw, 44px); counter-reset: none; }
+.spasso { position: relative; padding: clamp(20px, 2vw, 28px); border: 1px solid var(--fio-claro); border-radius: 24px; background: var(--branco); }
+.spasso__n { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--petroleo); color: var(--branco); font: 600 15px/1 var(--fonte); letter-spacing: .02em; }
+.spasso__t { margin-top: 18px; color: var(--tinta); font: 600 clamp(17px, .8rem + .4vw, 20px)/1.25 var(--fonte); letter-spacing: -.02em; }
+.spasso__d { margin-top: 8px; color: var(--texto-claro); font-size: 14.5px; line-height: 1.5; }
+
+@media (max-width: 63.99em) {
+  .spassos__cab { grid-template-columns: minmax(0, 1fr); }
+  .spassos__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 39.99em) {
+  .spassos__lista { gap: 10px; }
+  .spasso { padding: 16px; border-radius: 20px; }
+  .spasso__n { width: 36px; height: 36px; font-size: 13px; }
+  .spasso__t { margin-top: 12px; font-size: 16px; }
+  .spasso__d { font-size: 13.5px; }
+}

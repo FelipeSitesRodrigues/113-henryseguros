@@ -51,7 +51,7 @@ const LARGA = [640, 960, 1280, 1672]
 // ---------------------------------------------------------------- hero e topos das páginas
 await variantes(`${F}/hero-aperto-de-mao.png`, 'hero', LARGA)
 // topo da página Sobre: o Paulo no escritório da Henry (foto própria, pra não repetir o hero)
-await variantes(`${F}/sobre-topo-paulo.png`, 'sobre-topo', LARGA)
+await variantes(`${F}/sobre-topo-escritorio.png`, 'sobre-topo', LARGA)
 // seção das imobiliárias (Home): o corretor entregando as chaves
 await variantes(`${F}/imobiliarias-chaves.png`, 'imob', [480, 720, 933])
 
