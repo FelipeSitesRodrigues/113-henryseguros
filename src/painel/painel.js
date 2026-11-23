@@ -53,8 +53,8 @@ async function iniciar() {
 }
 
 async function lerConfig() {
-  let r = await fetch('config.json', { cache: 'no-store' })
-  if (r.status === 404) r = await fetch('config.exemplo.json', { cache: 'no-store' })
+  let r = await fetch(new URL('config.json', import.meta.url), { cache: 'no-store' })
+  if (r.status === 404) r = await fetch(new URL('config.exemplo.json', import.meta.url), { cache: 'no-store' })
   if (!r.ok) throw new Error('config ' + r.status)
   return r.json()
 }
