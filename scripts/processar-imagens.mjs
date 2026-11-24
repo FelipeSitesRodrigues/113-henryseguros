@@ -108,15 +108,22 @@ await variantes(`${R}/paulo/paulo-sobre-final.png`, 'paulo', [400, 600, 800, 102
 // ---------------------------------------------------------------- logos das seguradoras (uma cor só)
 // Tinta = o que não é fundo branco. A Suhai vem num retângulo verde-limão: ali a tinta é só o
 // texto escuro. Sai em petróleo #004854 com a transparência da tinta, 72 px de altura (2x de 36).
-const SEG = ['porto.svg', 'tokio.svg', 'bradesco.svg', 'allianz.svg', 'hdi.png', 'yelum.svg', 'sulamerica.png', 'zurich.svg', 'suhai.svg']
-for (const arq of SEG) {
+// Planos de saúde (seção 03d-saude): Amil (Wikimedia), Alice e Omint (sites oficiais; os dois
+// vêm em branco, então ali a tinta é a própria transparência). Bradesco, Porto e SulAmérica
+// reaproveitam os logos das seguradoras.
+const SEG = [
+  ...['porto.svg', 'tokio.svg', 'bradesco.svg', 'allianz.svg', 'hdi.png', 'yelum.svg', 'sulamerica.png', 'zurich.svg', 'suhai.svg'].map((a) => [`${R}/seguradoras/${a}`, a]),
+  ...['amil.svg', 'alice.svg', 'omint.png'].map((a) => [`${R}/planos-saude/${a}`, a]),
+]
+const NEGATIVOS = ['alice', 'omint']
+for (const [origem, arq] of SEG) {
   const nome = arq.replace(/\.\w+$/, '')
-  const { data, info } = await sharp(`${R}/seguradoras/${arq}`, { density: 400 }).resize({ height: 300 }).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
+  const { data, info } = await sharp(origem, { density: 400 }).resize({ height: 300 }).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
   const out = Buffer.alloc(info.width * info.height * 4)
   for (let i = 0; i < info.width * info.height; i++) {
     const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2], a = data[i * 4 + 3] / 255
     const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-    const tinta = nome === 'suhai' ? Math.max(0, Math.min(1, (0.45 - lum) / 0.25)) : Math.max(0, Math.min(1, (0.93 - lum) / 0.2))
+    const tinta = NEGATIVOS.includes(nome) ? 1 : nome === 'suhai' ? Math.max(0, Math.min(1, (0.45 - lum) / 0.25)) : Math.max(0, Math.min(1, (0.93 - lum) / 0.2))
     out[i * 4] = 0
     out[i * 4 + 1] = 72
     out[i * 4 + 2] = 84

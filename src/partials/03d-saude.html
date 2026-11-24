@@ -1,0 +1,45 @@
+    <!-- planos de saúde (pedido do Paulo, 2026-11-24): as 6 operadoras com que ele trabalha.
+         Cartão areia depois dos depoimentos: texto, os dois públicos (cada um com o seu WhatsApp)
+         e os botões à esquerda; os logos das operadoras em petróleo à direita.
+         Celular: título, logos, públicos e botões, um embaixo do outro. -->
+    <section class="saude" id="planos-de-saude" aria-labelledby="saude-titulo">
+      <div class="saude__cartao">
+        <div class="saude__cab">
+          <p class="rotulo" data-revela>Planos de saúde</p>
+          <h2 class="titulo" id="saude-titulo" data-palavras data-revela="palavras"><span data-t="saude.leve" class="titulo__leve">Plano de saúde</span> <span data-t="saude.forte" class="titulo__forte">com quem compara por você.</span></h2>
+          <p data-t="saude.apoio" class="saude__apoio" data-revela style="--atraso:.2s">Trabalhamos com as principais operadoras do país. A gente compara rede de hospitais, coparticipação e preço, explica a diferença e indica o plano que faz sentido pra você, sua família ou sua empresa.</p>
+        </div>
+
+        <ul class="saude__tipos" role="list">
+          <li class="saude__tipo" data-revela="grade" style="--i:0">
+            <i data-i="users-three" data-w="light" class="saude__i"></i>
+            <h3 class="saude__nome" data-t="saude.pf.titulo">Para você e sua família</h3>
+            <p class="saude__desc" data-t="saude.pf.texto">O plano com os hospitais e médicos que você quer manter, no valor que cabe no mês.</p>
+            <a class="saude__link" href="{{wa:saude-pf}}" data-zap="saude-pf" aria-label="Cotar plano familiar">Cotar<span class="saude__mais"> plano familiar</span><i data-i="arrow-up-right" data-w="regular" class="i--anda"></i></a>
+          </li>
+          <li class="saude__tipo" data-revela="grade" style="--i:1">
+            <i data-i="buildings" data-w="light" class="saude__i"></i>
+            <h3 class="saude__nome" data-t="saude.pj.titulo">Para sua empresa</h3>
+            <p class="saude__desc" data-t="saude.pj.texto">Plano empresarial pra equipe, com um consultor que cuida de inclusões, exclusões e renovação.</p>
+            <a class="saude__link" href="{{wa:saude-pj}}" data-zap="saude-pj" aria-label="Cotar plano empresarial">Cotar<span class="saude__mais"> plano empresarial</span><i data-i="arrow-up-right" data-w="regular" class="i--anda"></i></a>
+          </li>
+        </ul>
+
+        <div class="saude__acoes" data-revela style="--atraso:.3s">
+          <a class="btn btn--petroleo" href="{{wa:saude}}" data-zap="saude">Cotar plano de saúde<i data-i="arrow-up-right" data-w="regular" class="i--anda"></i></a>
+          <p class="saude__nota" data-t="saude.nota">Cotação sem compromisso. Você decide depois de entender cada opção.</p>
+        </div>
+
+        <div class="saude__ops">
+          <p class="saude__ops-titulo" data-revela>Operadoras</p>
+          <ul class="saude__logos" role="list">
+            <li class="saude__op" data-revela="grade" style="--i:0"><img data-img="seg-sulamerica" sizes="160px" alt="SulAmérica Saúde" loading="lazy" decoding="async" class="saude__logo saude__logo--sulamerica"><span>SulAmérica</span></li>
+            <li class="saude__op" data-revela="grade" style="--i:1"><img data-img="seg-amil" sizes="160px" alt="Amil" loading="lazy" decoding="async" class="saude__logo saude__logo--amil"><span>Amil</span></li>
+            <li class="saude__op" data-revela="grade" style="--i:0"><img data-img="seg-bradesco" sizes="160px" alt="Bradesco Saúde" loading="lazy" decoding="async" class="saude__logo saude__logo--bradesco"><span>Bradesco Saúde</span></li>
+            <li class="saude__op" data-revela="grade" style="--i:1"><img data-img="seg-omint" sizes="160px" alt="Omint" loading="lazy" decoding="async" class="saude__logo saude__logo--omint"><span>Omint</span></li>
+            <li class="saude__op" data-revela="grade" style="--i:0"><img data-img="seg-porto" sizes="160px" alt="Porto Saúde" loading="lazy" decoding="async" class="saude__logo saude__logo--porto"><span>Porto Saúde</span></li>
+            <li class="saude__op" data-revela="grade" style="--i:1"><img data-img="seg-alice" sizes="160px" alt="Alice" loading="lazy" decoding="async" class="saude__logo saude__logo--alice"><span>Alice</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>

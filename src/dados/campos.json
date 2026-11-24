@@ -68,6 +68,54 @@
    "tipo": "texto"
   },
   {
+   "chave": "saude.leve",
+   "rotulo": "Título (parte clara)",
+   "grupo": "Início · Planos de saúde",
+   "tipo": "linha"
+  },
+  {
+   "chave": "saude.forte",
+   "rotulo": "Título (parte forte)",
+   "grupo": "Início · Planos de saúde",
+   "tipo": "linha"
+  },
+  {
+   "chave": "saude.apoio",
+   "rotulo": "Texto de apoio",
+   "grupo": "Início · Planos de saúde",
+   "tipo": "texto"
+  },
+  {
+   "chave": "saude.pf.titulo",
+   "rotulo": "Família: título",
+   "grupo": "Início · Planos de saúde",
+   "tipo": "linha"
+  },
+  {
+   "chave": "saude.pf.texto",
+   "rotulo": "Família: texto",
+   "grupo": "Início · Planos de saúde",
+   "tipo": "texto"
+  },
+  {
+   "chave": "saude.pj.titulo",
+   "rotulo": "Empresa: título",
+   "grupo": "Início · Planos de saúde",
+   "tipo": "linha"
+  },
+  {
+   "chave": "saude.pj.texto",
+   "rotulo": "Empresa: texto",
+   "grupo": "Início · Planos de saúde",
+   "tipo": "texto"
+  },
+  {
+   "chave": "saude.nota",
+   "rotulo": "Nota do botão",
+   "grupo": "Início · Planos de saúde",
+   "tipo": "linha"
+  },
+  {
    "chave": "como.leve",
    "rotulo": "Título (parte clara)",
    "grupo": "Início · Como funciona",

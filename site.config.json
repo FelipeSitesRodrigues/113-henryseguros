@@ -23,7 +23,10 @@
     "duvida": "Olá! Vim pelo site da Henry e tenho uma dúvida sobre seguro.",
     "outro": "Olá! Vim pelo site da Henry e queria entender qual seguro serve para o meu caso.",
     "parceiro": "Olá, Paulo! Vim pelo site da Henry e quero ser parceiro imobiliário em seguro fiança.",
-    "servico": "Olá! Vim pelo site da Henry e gostaria de uma cotação de *{servico}*."
+    "servico": "Olá! Vim pelo site da Henry e gostaria de uma cotação de *{servico}*.",
+    "saude": "Olá! Vim pelo site da Henry e gostaria de uma cotação de *plano de saúde*.",
+    "saude-pf": "Olá! Vim pelo site da Henry e gostaria de uma cotação de *plano de saúde para mim e minha família*.",
+    "saude-pj": "Olá! Vim pelo site da Henry e gostaria de uma cotação de *plano de saúde empresarial*."
   },
   "pendencias": [
     "conferir com o Paulo: 'revisão todo ano', 'retorno no mesmo dia útil' (FAQ) e a resposta 'você paga o preço da seguradora' (objeções)",
