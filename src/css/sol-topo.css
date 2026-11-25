@@ -29,7 +29,8 @@
     linear-gradient(0deg, rgb(3 37 43 / .5) 0%, transparent 42%),
     linear-gradient(180deg, rgb(3 37 43 / .4) 0%, transparent 24%);
 }
-.ptopo__texto { width: min(820px, 100%); padding: 0 0 clamp(48px, 9vh, 110px) clamp(28px, 4vw, 72px); }
+/* padding-top: espaço do menu fixo. Com o cartão mais baixo que o texto (tela larga e baixa, ou zoom), o texto subia por baixo do menu */
+.ptopo__texto { width: min(820px, 100%); padding: clamp(118px, 9vw, 150px) 0 clamp(48px, 9vh, 110px) clamp(28px, 4vw, 72px); }
 .migalhas { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: clamp(18px, 2vw, 28px); color: rgb(255 255 255 / .7); font-size: 13.5px; }
 .migalhas a { color: rgb(255 255 255 / .9); text-decoration: underline; text-decoration-color: rgb(255 255 255 / .3); text-underline-offset: 4px; }
 .ptopo__etiqueta { font: 600 13px/1.3 var(--fonte); letter-spacing: .32em; text-transform: uppercase; }
