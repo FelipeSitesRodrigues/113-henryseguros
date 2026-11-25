@@ -120,7 +120,7 @@ function prepararEntrada() {
     if (!/^\S+@\S+\.\S+$/.test(email)) return erroForm('esqueci', 'Digite um e-mail válido.')
     erroForm('esqueci', '')
     await ocupado(ev.submitter || $('#form-esqueci button[type=submit]'), async () => {
-      const { error } = await app.sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + '/painel/' })
+      const { error } = await app.sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + '/painel' })
       if (error) return erroForm('esqueci', /rate limit|security purposes/i.test(error.message) ? 'Pedido repetido muito rápido. Espere um minuto e tente de novo.' : traduzErro(error))
       const ok = $('#esqueci-ok')
       ok.textContent = 'Pronto. Se esse e-mail tiver acesso ao painel, o link chega em alguns minutos. Confira também a caixa de spam.'
