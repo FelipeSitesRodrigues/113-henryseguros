@@ -12,7 +12,7 @@
   const abrir = (sim) => {
     topo.classList.toggle('topo--aberto', sim)
     botao.setAttribute('aria-expanded', String(sim))
-    botao.setAttribute('aria-label', sim ? 'Fechar menu' : 'Abrir menu')
+    botao.setAttribute('aria-label', document.documentElement.lang === 'en' ? (sim ? 'Close menu' : 'Open menu') : sim ? 'Fechar menu' : 'Abrir menu')
     document.documentElement.style.overflow = sim ? 'hidden' : ''
     fundo.forEach((el) => (el.inert = sim))
     if (sim) menu.querySelector('a')?.focus({ preventScroll: true })

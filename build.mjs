@@ -35,6 +35,7 @@ import { fileURLToPath } from 'node:url'
 import * as cheerio from 'cheerio'
 import { letras } from './scripts/letras.mjs'
 import { carregarCms, iniciarCacheCms, variantesCms, ehDoStorage } from './scripts/cms.mjs'
+import { traduzir, rotaEn } from './scripts/ingles.mjs'
 import { limparPost, minutosDeLeitura, dataLonga, dataCurta, textoPuro } from './scripts/blog.mjs'
 
 const RAIZ = path.dirname(fileURLToPath(import.meta.url))
@@ -47,6 +48,22 @@ const cel = JSON.parse(readFileSync(P('src/dados/celular.json'), 'utf8'))
 const manifesto = existsSync(P('src/assets/img/manifesto.json')) ? JSON.parse(readFileSync(P('src/assets/img/manifesto.json'), 'utf8')) : {}
 const avisos = []
 const BASE = (cfg.dominio || '').replace(/\/$/, '')
+
+// ---------------------------------------------------------------- inglês (/en/...)
+// Mesmas páginas, menos o blog (os artigos são só em português). Tradução em src/i18n/en.json.
+const EXTRAIR_EN = process.argv.includes('--extrair-en')
+const ARQ_EN = P('src/i18n/en.json')
+const DIC_EN = existsSync(ARQ_EN) ? JSON.parse(readFileSync(ARQ_EN, 'utf8')) : {}
+const FALTANDO_EN = new Set()
+let ROTAS_EN = new Set()
+const temEn = (pag) => ROTAS_EN.has(pag.rota)
+const rotaIdioma = (pag, lang) => (lang === 'en' ? rotaEn(pag.rota, ROTAS_EN) : pag.rota)
+function htmlIdiomas(pag, lang) {
+  const op = (l, href, rotulo, bandeira, html) =>
+    `<a class="idiomas__op${l === lang ? ' ativo' : ''}" href="${href}" hreflang="${html}" lang="${html}" aria-label="${rotulo}" data-fixo${l === lang ? ' aria-current="true"' : ''}><img class="bandeira" src="/assets/bandeiras/${bandeira}.svg" alt="" width="26" height="26"></a>`
+  const enHref = temEn(pag) ? rotaEn(pag.rota, ROTAS_EN) : '/en'
+  return `<div class="idiomas" role="group" aria-label="Idioma do site">${op('pt', pag.rota, 'Português', 'brasil', 'pt-BR')}${op('en', enHref, 'English', 'eua', 'en')}</div>`
+}
 
 // ---------------------------------------------------------------- conteúdo do painel (Supabase)
 // O que o Paulo muda no /painel sobrescreve o padrão do código. Na Vercel o build falha se o
@@ -570,7 +587,7 @@ function textosPadrao() {
   return out
 }
 
-function montar(pag, preview = null) {
+function montar(pag, preview = null, lang = 'pt') {
   usados = new Map()
   let faqItens = null
   const preloads = []
@@ -658,6 +675,7 @@ function montar(pag, preview = null) {
     if (pag[k] === undefined) avisos.push(`[${pag.id}] página sem o campo ${k}`)
     return esc(pag[k] ?? '')
   })
+  html = html.replace('<!-- @idiomas -->', () => htmlIdiomas(pag, lang))
   html = html.replace(/\{\{inicio\}\}/g, pag.rota === '/' ? '#inicio' : '/')
   html = html.replace(/\{\{wa:([\w-]+)\}\}/g, (_, chave) => esc(linkWa(chave)))
   html = html.replace(/\{\{cfg\.([\w.]+)\}\}/g, (_, c) => esc(valor(c)))
@@ -666,13 +684,14 @@ function montar(pag, preview = null) {
   html = html.replace(/<a\b(?![^>]*\starget=)([^>]*\shref="https:\/\/wa\.me\/)/g, '<a target="_blank" rel="noopener"$1')
   html = html.replace('<!-- @schema -->', () => schema(pag, faqItens))
   html = imagens(html, preloads)
+  if (lang === 'en') html = traduzir(html, DIC_EN, { rotasEn: ROTAS_EN, faltando: FALTANDO_EN, coletar: EXTRAIR_EN }).replace('<meta property="og:locale" content="pt_BR">', '<meta property="og:locale" content="en_US">')
   html = letras(html)
   html = html.replace('<!-- @sprite -->', () => `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;overflow:hidden">${[...usados.values()].join('')}</svg>`)
   html = html.replace('<!-- @preload-hero -->', () => linksPreload(preloads))
   html = html.replace(
     '<!-- @meta-dominio -->',
     BASE
-      ? `<link rel="canonical" href="${url(pag.rota)}">\n  <meta property="og:url" content="${url(pag.rota)}">\n  <meta property="og:image" content="${url(`/assets/img/${pag.post?.og || 'og-henry.jpg'}`)}">`
+      ? `<link rel="canonical" href="${url(rotaIdioma(pag, lang))}">\n  <meta property="og:url" content="${url(rotaIdioma(pag, lang))}">${temEn(pag) ? `\n  <link rel="alternate" hreflang="pt-BR" href="${url(pag.rota)}">\n  <link rel="alternate" hreflang="en" href="${url(rotaIdioma(pag, 'en'))}">\n  <link rel="alternate" hreflang="x-default" href="${url(pag.rota)}">` : ''}\n  <meta property="og:image" content="${url(`/assets/img/${pag.post?.og || 'og-henry.jpg'}`)}">`
       : `<meta property="og:image" content="/assets/img/${pag.post?.og || 'og-henry.jpg'}">`,
   )
   return html
@@ -832,15 +851,31 @@ rmSync(path.join(DIST, 'painel/config.exemplo.json'), { force: true })
 const kb = (s) => `${(Buffer.byteLength(s) / 1024).toFixed(1)} KB`
 if (!argPreview) {
   const hoje = new Date().toISOString().slice(0, 10)
+  const paginasEn = paginas.filter((p) => !p.post && p.id !== 'blog')
+  ROTAS_EN = new Set(paginasEn.map((p) => p.rota))
   for (const pag of paginas) {
     const html = montar(pag)
     verificar(html, pag)
     gravar(path.join(DIST, pag.arquivo), html)
     console.log(`ok dist/${pag.arquivo.padEnd(30)} ${kb(html).padStart(9)} (${usados.size} ícones)`)
   }
+  for (const pag of paginasEn) {
+    const html = montar(pag, null, 'en')
+    verificar(html, { ...pag, id: `en:${pag.id}`, rota: rotaIdioma(pag, 'en') })
+    gravar(path.join(DIST, 'en', pag.arquivo), html)
+    console.log(`ok dist/en/${pag.arquivo.padEnd(27)} ${kb(html).padStart(9)}`)
+  }
+  if (EXTRAIR_EN) {
+    const novo = { ...DIC_EN }
+    let n = 0
+    for (const k of FALTANDO_EN) if (!(k in novo)) { novo[k] = ''; n++ }
+    mkdirSync(path.dirname(ARQ_EN), { recursive: true })
+    writeFileSync(ARQ_EN, JSON.stringify(novo, null, 1) + '\n')
+    console.log(`src/i18n/en.json: ${n} textos novos (${Object.keys(novo).length} no total)`)
+  } else if (FALTANDO_EN.size) avisos.push(`inglês: ${FALTANDO_EN.size} textos sem tradução (rodar node build.mjs --extrair-en e traduzir em src/i18n/en.json), ex.: ${[...FALTANDO_EN].slice(0, 3).map((s) => JSON.stringify(s.slice(0, 50))).join(' | ')}`)
   verificarLinks()
   gravar(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /preview/\nDisallow: /painel/\n${BASE ? `Sitemap: ${BASE}/sitemap.xml\n` : ''}`)
-  if (BASE) gravar(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paginas.filter((p) => !p.noindex).map((p) => `  <url><loc>${url(p.rota)}</loc><lastmod>${p.post ? dataCurta(p.post.atualizado_em || p.post.publicado_em) : hoje}</lastmod></url>`).join('\n')}\n</urlset>\n`)
+  if (BASE) gravar(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paginas.filter((p) => !p.noindex).map((p) => `  <url><loc>${url(p.rota)}</loc><lastmod>${p.post ? dataCurta(p.post.atualizado_em || p.post.publicado_em) : hoje}</lastmod></url>`).join('\n')}\n${paginasEn.filter((p) => !p.noindex).map((p) => `  <url><loc>${url(rotaIdioma(p, 'en'))}</loc><lastmod>${hoje}</lastmod></url>`).join('\n')}\n</urlset>\n`)
   for (const p of cfg.pendencias || []) avisos.push(`pendente: ${p}`)
   if (process.argv.includes('--publicar')) rmSync(path.join(DIST, 'preview'), { recursive: true, force: true })
 } else {

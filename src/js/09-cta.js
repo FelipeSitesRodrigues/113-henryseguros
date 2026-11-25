@@ -22,20 +22,21 @@
     form.addEventListener('submit', (e) => {
       e.preventDefault()
       const f = form.elements
+      const en = document.documentElement.lang === 'en'
       const falta = []
-      if (!f.nome.value.trim()) falta.push('seu nome')
-      if (f.whatsapp.value.replace(/\D/g, '').length < 10) falta.push('um WhatsApp com DDD')
-      if (!f.tipo.value) falta.push('o tipo de seguro')
-      if (!f.aceite.checked) falta.push('o aceite da Política de Privacidade')
+      if (!f.nome.value.trim()) falta.push(en ? 'your name' : 'seu nome')
+      if (f.whatsapp.value.replace(/\D/g, '').length < 10) falta.push(en ? 'a WhatsApp number with area code' : 'um WhatsApp com DDD')
+      if (!f.tipo.value) falta.push(en ? 'the type of insurance' : 'o tipo de seguro')
+      if (!f.aceite.checked) falta.push(en ? 'your agreement to the Privacy Policy' : 'o aceite da Política de Privacidade')
       if (falta.length) {
-        erro.textContent = `Falta ${falta.join(', ').replace(/, ([^,]*)$/, ' e $1')}.`
+        erro.textContent = en ? `Missing ${falta.join(', ').replace(/, ([^,]*)$/, ' and $1')}.` : `Falta ${falta.join(', ').replace(/, ([^,]*)$/, ' e $1')}.`
         erro.hidden = false
         ;(!f.nome.value.trim() ? f.nome : f.whatsapp.value.replace(/\D/g, '').length < 10 ? f.whatsapp : !f.tipo.value ? f.tipo : f.aceite).focus()
         return
       }
       erro.hidden = true
-      const linhas = [`Olá! Vim pelo site da Henry e gostaria de uma cotação de *${f.tipo.value}*.`, `Nome: ${f.nome.value.trim()}`, `WhatsApp: ${f.whatsapp.value}`]
-      if (f.detalhes.value.trim()) linhas.push(`O que quero proteger: ${f.detalhes.value.trim()}`)
+      const linhas = en ? [`Hi! I found Henry's website and would like a quote for *${f.tipo.value}*.`, `Name: ${f.nome.value.trim()}`, `WhatsApp: ${f.whatsapp.value}`] : [`Olá! Vim pelo site da Henry e gostaria de uma cotação de *${f.tipo.value}*.`, `Nome: ${f.nome.value.trim()}`, `WhatsApp: ${f.whatsapp.value}`]
+      if (f.detalhes.value.trim()) linhas.push(`${en ? 'What I want to protect' : 'O que quero proteger'}: ${f.detalhes.value.trim()}`)
       ;(window.dataLayer = window.dataLayer || []).push({ event: 'whatsapp_clique', origem: 'formulario', servico: f.tipo.value, pagina: location.pathname })
       if (typeof window.fbq === 'function') window.fbq('track', 'Lead', { servico: f.tipo.value })
       window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(linhas.join('\n'))}`, '_blank', 'noopener')

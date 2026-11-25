@@ -46,7 +46,15 @@
 .menu__lista > li { flex: none; }
 .menu__lista [aria-current='page'] { background: linear-gradient(180deg, rgb(255 255 255 / .42), rgb(255 255 255 / .2)); }
 .menu__extra { display: none; }
-.topo__zap { justify-self: end; gap: 10px; min-height: 48px; padding-inline: 22px; font-weight: 600; font-size: 15px; }
+.topo__dir { justify-self: end; display: flex; align-items: center; gap: 14px; }
+/* idiomas (pedido do Paulo, 2026-11-25): as duas bandeiras redondas do 0101 United, a ativa com aro fino */
+.idiomas { display: flex; align-items: center; gap: 4px; }
+.idiomas__op { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; transition: transform .3s var(--ease-out), box-shadow .3s ease, opacity .3s ease; }
+.idiomas__op .bandeira { display: block; width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+.idiomas__op:not(.ativo) { opacity: .72; }
+.idiomas__op.ativo { box-shadow: 0 0 0 1.5px rgb(255 255 255 / .85); }
+@media (hover: hover) { .idiomas__op:hover { transform: scale(1.08); opacity: 1; } }
+.topo__zap { gap: 10px; min-height: 48px; padding-inline: 22px; font-weight: 600; font-size: 15px; }
 .topo__zap .i { width: 21px; height: 21px; }
 .topo__menu { display: none; }
 
@@ -61,7 +69,7 @@
 /* ---------------------------------------------------------------- celular e tablet */
 @media (max-width: 63.99em) {
   .topo { padding: calc(var(--respiro) + 10px) calc(var(--respiro) + 8px) 0; }
-  .topo__barra { grid-template-columns: 1fr auto; padding: 6px 6px 6px 14px; }
+  .topo__barra { grid-template-columns: 1fr auto auto; gap: 10px; padding: 6px 6px 6px 14px; }
   .marca { justify-self: start; width: 138px; }
   .topo__zap { display: none; }
   .topo__menu {
@@ -220,7 +228,7 @@
   .topo__barra { grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; }
   .marca { grid-column: 1; grid-row: 1; justify-self: start; width: 132px; margin-left: 10px; }
   .menu { grid-column: 2; grid-row: 1; justify-self: center; }
-  .topo__zap { grid-column: 3; grid-row: 1; }
+  .topo__dir { grid-column: 3; grid-row: 1; }
   .topo__zap-pre { display: none; }
 }
 /* Com o Blog no menu são 6 cápsulas: o logo só vai pro centro a partir de 1680 */
@@ -228,6 +236,6 @@
   .topo__barra:has(.menu [href="/blog"]) { grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; }
   .topo__barra:has(.menu [href="/blog"]) .marca { grid-column: 1; grid-row: 1; justify-self: start; width: 132px; margin-left: 10px; }
   .topo__barra:has(.menu [href="/blog"]) .menu { grid-column: 2; grid-row: 1; justify-self: center; }
-  .topo__barra:has(.menu [href="/blog"]) .topo__zap { grid-column: 3; grid-row: 1; }
+  .topo__barra:has(.menu [href="/blog"]) .topo__dir { grid-column: 3; grid-row: 1; }
   .topo__barra:has(.menu [href="/blog"]) .topo__zap-pre { display: none; }
 }
