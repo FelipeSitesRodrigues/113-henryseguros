@@ -109,7 +109,7 @@ export function traduzir(html, dic, { rotasEn, faltando, coletar = false }) {
   }
 
   // links: rotas internas ganham /en; mensagens de WhatsApp em inglês
-  $('a[href], link[rel="canonical"]').each((_, el) => {
+  $('a[href]:not([data-fixo]), link[rel="canonical"]').each((_, el) => {
     const href = $(el).attr('href')
     if (href.startsWith('/')) {
       $(el).attr('href', rotaEn(href, rotasEn))
