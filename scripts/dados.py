@@ -88,6 +88,20 @@ S = [
          cobre=[["users", "Danos materiais e corporais a terceiros"], ["scales", "Custos de defesa e honorários"], ["handshake", "Acordos e indenizações dentro do limite contratado"], ["briefcase", "Responsabilidade civil profissional (erro ou omissão)"]],
          porque=["Apólice desenhada pra atividade, não genérica", "Leitura das exclusões com você antes de contratar", "Consultor do lado na hora da reclamação"],
          perguntas=[["Meu contrato exige seguro de RC. Vocês fazem?", "Sim. Mandamos a apólice no formato que o contrato pede."], ["Cobre processo antigo?", "Em geral não. Por isso vale contratar antes de precisar."]]),
+    dict(id="saude", rota="/plano-de-saude", nome="Plano de Saúde", curto="Plano de Saúde", l1="Plano de", l2="Saúde.", icone="heartbeat", mensagem="plano de saúde",
+         grade=False,  # tem seção própria na Home (03d-saude), fora da grade dos 7 seguros
+         descricao="Para você, sua família e sua empresa.",
+         widgets=[["heartbeat", "Rede credenciada · Conferida"]],
+         alt="Céu de fim de tarde sobre Alphaville",
+         h1a="Plano de saúde", h1b="sem escolher no escuro.",
+         sub="Comparamos SulAmérica, Amil, Bradesco Saúde, Omint, Porto Saúde e Alice e indicamos o plano certo pra você, sua família ou sua empresa.",
+         botao="Cotar plano de saúde",
+         paraQuemTitulo=["Feito para", "quem cuida de gente."],
+         paraQuem=[["users-three", "Você e sua família", "Titular e dependentes no mesmo plano"], ["buildings", "Sua empresa", "Plano empresarial pra equipe"], ["arrows-left-right", "Quem quer trocar de plano", "Conferindo a portabilidade de carências"]],
+         cobre=[["hospital", "Rede de hospitais, laboratórios e médicos"], ["map-pin", "Abrangência regional ou nacional"], ["bed", "Acomodação em enfermaria ou apartamento"], ["coins", "Com ou sem coparticipação"], ["receipt", "Reembolso pra consulta fora da rede"]],
+         cobreTitulo=["O que a gente", "compara pra você."],
+         porque=["Comparamos as operadoras com os seus médicos e hospitais na mão", "Explicamos carência, coparticipação e reajuste antes de assinar", "Um consultor pra autorização, reembolso e inclusão de dependente"],
+         perguntas=[["Quanto custa um plano de saúde?", "Depende da idade de cada pessoa, da rede, da acomodação e de ter ou não coparticipação. Por isso a cotação é feita pra você."], ["Posso manter meu médico ou hospital?", "Conferimos se ele está na rede de cada plano antes de você escolher."], ["Tenho CNPJ. Posso contratar plano empresarial?", "Em muitos casos, sim, inclusive com poucas vidas. As regras variam por operadora, e a gente confere pra você."]]),
 ]
 
 FAQ = [
@@ -97,6 +111,7 @@ FAQ = [
     ["O que acontece quando eu preciso acionar o seguro?", "Você chama o seu consultor. Ele abre o processo na seguradora, cuida dos documentos e acompanha até o fim."],
     ["Atendem só Alphaville?", "O escritório fica em Alphaville, Barueri, mas o atendimento funciona por WhatsApp e videochamada, então dá pra cuidar do seu seguro de onde você estiver."],
     ["Posso trocar meu seguro atual pela Henry?", "Pode. Comparamos sua apólice com o mercado e, se valer a pena, fazemos a troca na renovação ou antes, conforme o caso."],
+    ["Vocês trabalham com plano de saúde?", "Sim. Com SulAmérica, Amil, Bradesco Saúde, Omint, Porto Saúde e Alice, pra você, sua família ou sua empresa. Comparamos as opções e indicamos a que faz sentido."],
     ["Vocês atendem empresas?", "Sim. Seguro empresarial, frota e responsabilidade civil, com um consultor cuidando de todas as apólices da empresa."],
 ]
 
@@ -136,7 +151,7 @@ def gravar(arq, obj):
         json.dump(obj, f, ensure_ascii=False, indent=1)
 
 
-gravar("src/dados/solucoes.json", {"_sobre": "Os 7 seguros: cartões da Home, rodapé e uma página por seguro (rota). Texto da copy-site.md v1. Gerado por scripts/dados.py.", "itens": S})
+gravar("src/dados/solucoes.json", {"_sobre": "Os 7 seguros e o plano de saúde: cartões da Home (menos os de grade=False), rodapé e uma página por seguro (rota). Texto da copy-site.md v1. Gerado por scripts/dados.py.", "itens": S})
 gravar("src/dados/faq.json", {"itens": [{"pergunta": p, "resposta": r} for p, r in FAQ]})
 gravar("src/paginas.json", {"_sobre": "Páginas fixas. As 7 de seguro saem do src/dados/solucoes.json no build.mjs, com as seções sol-*. Gerado por scripts/dados.py.", "itens": PAG})
 print("ok")

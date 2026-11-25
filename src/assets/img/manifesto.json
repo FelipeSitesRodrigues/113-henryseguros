@@ -599,6 +599,76 @@
   "h": 941,
   "kb": 32
  },
+ "topo-saude-640.avif": {
+  "w": 640,
+  "h": 360,
+  "kb": 9
+ },
+ "topo-saude-640.webp": {
+  "w": 640,
+  "h": 360,
+  "kb": 15
+ },
+ "topo-saude-960.avif": {
+  "w": 960,
+  "h": 540,
+  "kb": 16
+ },
+ "topo-saude-960.webp": {
+  "w": 960,
+  "h": 540,
+  "kb": 26
+ },
+ "topo-saude-1280.avif": {
+  "w": 1280,
+  "h": 720,
+  "kb": 24
+ },
+ "topo-saude-1280.webp": {
+  "w": 1280,
+  "h": 720,
+  "kb": 39
+ },
+ "topo-saude-1672.avif": {
+  "w": 1672,
+  "h": 941,
+  "kb": 35
+ },
+ "topo-saude-1672.webp": {
+  "w": 1672,
+  "h": 941,
+  "kb": 56
+ },
+ "card-saude-360.avif": {
+  "w": 360,
+  "h": 480,
+  "kb": 6
+ },
+ "card-saude-360.webp": {
+  "w": 360,
+  "h": 480,
+  "kb": 9
+ },
+ "card-saude-540.avif": {
+  "w": 540,
+  "h": 720,
+  "kb": 10
+ },
+ "card-saude-540.webp": {
+  "w": 540,
+  "h": 720,
+  "kb": 15
+ },
+ "card-saude-706.avif": {
+  "w": 706,
+  "h": 941,
+  "kb": 15
+ },
+ "card-saude-706.webp": {
+  "w": 706,
+  "h": 941,
+  "kb": 22
+ },
  "celular-640.avif": {
   "w": 640,
   "h": 360,

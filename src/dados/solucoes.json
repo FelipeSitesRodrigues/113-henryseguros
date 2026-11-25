@@ -1,5 +1,5 @@
 {
- "_sobre": "Os 7 seguros: cartões da Home, rodapé e uma página por seguro (rota). Texto da copy-site.md v1. Gerado por scripts/dados.py.",
+ "_sobre": "Os 7 seguros e o plano de saúde: cartões da Home (menos os de grade=False), rodapé e uma página por seguro (rota). Texto da copy-site.md v1. Gerado por scripts/dados.py.",
  "itens": [
   {
    "id": "auto",
@@ -1146,6 +1146,174 @@
     [
      "Indenização",
      "Se houver acordo ou condenação, paga dentro do limite contratado."
+    ]
+   ]
+  },
+  {
+   "id": "saude",
+   "rota": "/plano-de-saude",
+   "nome": "Plano de Saúde",
+   "curto": "Plano de Saúde",
+   "l1": "Plano de",
+   "l2": "Saúde.",
+   "icone": "heartbeat",
+   "mensagem": "plano de saúde",
+   "grade": false,
+   "descricao": "Para você, sua família e sua empresa.",
+   "widgets": [
+    [
+     "heartbeat",
+     "Rede credenciada · Conferida"
+    ]
+   ],
+   "alt": "Céu de fim de tarde sobre Alphaville",
+   "h1a": "Plano de saúde",
+   "h1b": "sem escolher no escuro.",
+   "sub": "Comparamos SulAmérica, Amil, Bradesco Saúde, Omint, Porto Saúde e Alice e indicamos o plano certo pra você, sua família ou sua empresa.",
+   "botao": "Cotar plano de saúde",
+   "paraQuemTitulo": [
+    "Feito para",
+    "quem cuida de gente."
+   ],
+   "paraQuem": [
+    [
+     "users-three",
+     "Você e sua família",
+     "Titular e dependentes no mesmo plano"
+    ],
+    [
+     "buildings",
+     "Sua empresa",
+     "Plano empresarial pra equipe"
+    ],
+    [
+     "arrows-left-right",
+     "Quem quer trocar de plano",
+     "Conferindo a portabilidade de carências"
+    ]
+   ],
+   "cobre": [
+    [
+     "hospital",
+     "Rede de hospitais, laboratórios e médicos"
+    ],
+    [
+     "map-pin",
+     "Abrangência regional ou nacional"
+    ],
+    [
+     "bed",
+     "Acomodação em enfermaria ou apartamento"
+    ],
+    [
+     "coins",
+     "Com ou sem coparticipação"
+    ],
+    [
+     "receipt",
+     "Reembolso pra consulta fora da rede"
+    ]
+   ],
+   "cobreTitulo": [
+    "O que a gente",
+    "compara pra você."
+   ],
+   "porque": [
+    "Comparamos as operadoras com os seus médicos e hospitais na mão",
+    "Explicamos carência, coparticipação e reajuste antes de assinar",
+    "Um consultor pra autorização, reembolso e inclusão de dependente"
+   ],
+   "perguntas": [
+    [
+     "Quanto custa um plano de saúde?",
+     "Depende da idade de cada pessoa, da rede, da acomodação e de ter ou não coparticipação. Por isso a cotação é feita pra você."
+    ],
+    [
+     "Posso manter meu médico ou hospital?",
+     "Conferimos se ele está na rede de cada plano antes de você escolher."
+    ],
+    [
+     "Tenho CNPJ. Posso contratar plano empresarial?",
+     "Em muitos casos, sim, inclusive com poucas vidas. As regras variam por operadora, e a gente confere pra você."
+    ],
+    [
+     "O que é carência?",
+     "É o prazo entre a contratação e o direito de usar alguns atendimentos. A ANS define prazos máximos, e em alguns casos dá pra aproveitar a carência já cumprida em outro plano."
+    ],
+    [
+     "Como funciona o reajuste?",
+     "Existe o reajuste anual e o por mudança de faixa etária. No plano empresarial, o anual é negociado com a operadora. A gente explica antes de você assinar."
+    ],
+    [
+     "Já tenho plano. Vale trocar?",
+     "Pode valer. Comparamos o seu plano atual com o mercado e conferimos se a portabilidade de carências se aplica ao seu caso."
+    ]
+   ],
+   "entendaTitulo": [
+    "Plano de saúde,",
+    "explicado antes de assinar."
+   ],
+   "entenda": [
+    "O plano de saúde dá acesso a consultas, exames, internações e outros atendimentos na rede da operadora, conforme o tipo de plano contratado. Os planos são regulados pela ANS, a Agência Nacional de Saúde Suplementar, que define a lista mínima de procedimentos que todos precisam cobrir.",
+    "O que muda de um plano pro outro é a rede de hospitais e médicos, a área de cobertura, o tipo de quarto na internação, a coparticipação e o reembolso. É nesses detalhes que a gente compara as operadoras pra você."
+   ],
+   "precoTitulo": "O que pesa no preço",
+   "preco": [
+    [
+     "user",
+     "Idade de cada pessoa",
+     "O valor muda por faixa etária"
+    ],
+    [
+     "hospital",
+     "Rede escolhida",
+     "Hospitais e laboratórios incluídos"
+    ],
+    [
+     "bed",
+     "Acomodação",
+     "Enfermaria ou apartamento"
+    ],
+    [
+     "coins",
+     "Coparticipação",
+     "Mensalidade menor, pagando parte de cada uso"
+    ]
+   ],
+   "extras": [
+    [
+     "tooth",
+     "Plano odontológico junto"
+    ],
+    [
+     "airplane",
+     "Assistência em viagem, conforme o plano"
+    ],
+    [
+     "receipt",
+     "Reembolso maior pra médico fora da rede"
+    ]
+   ],
+   "passosTitulo": [
+    "Da cotação",
+    "à carteirinha."
+   ],
+   "passos": [
+    [
+     "Conversa",
+     "Quem vai entrar no plano, idades, cidade e os médicos e hospitais que importam."
+    ],
+    [
+     "Comparação",
+     "A gente cota nas operadoras e mostra as diferenças lado a lado."
+    ],
+    [
+     "Proposta",
+     "Você escolhe, preenche a declaração de saúde e envia os documentos."
+    ],
+    [
+     "Plano ativo",
+     "Com a proposta aceita, chega a carteirinha. E o consultor segue do seu lado."
     ]
    ]
   }

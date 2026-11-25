@@ -18,7 +18,7 @@
  * Uso: node scripts/processar-imagens.mjs   (ou npm run imagens)
  */
 import sharp from 'sharp'
-import { mkdirSync, writeFileSync, rmSync, readdirSync, readFileSync } from 'node:fs'
+import { mkdirSync, writeFileSync, rmSync, readdirSync, readFileSync, existsSync } from 'node:fs'
 import path from 'node:path'
 
 const R = '../0113 - Henry Seguros/Recursos Site'
@@ -56,9 +56,10 @@ await variantes(`${F}/sobre-topo-escritorio.png`, 'sobre-topo', LARGA)
 await variantes(`${F}/imobiliarias-chaves.png`, 'imob', [480, 720, 933])
 
 // foco horizontal do assunto de cada foto (0 = esquerda, 1 = direita), pro recorte do cartão
-const SEGUROS = { auto: 0.8, residencial: 0.7, empresarial: 0.73, frota: 0.74, fianca: 0.72, capitalizacao: 0.68, 'responsabilidade-civil': 0.76 }
+const SEGUROS = { auto: 0.8, residencial: 0.7, empresarial: 0.73, frota: 0.74, fianca: 0.72, capitalizacao: 0.68, 'responsabilidade-civil': 0.76, saude: 0.7 }
 for (const [id, foco] of Object.entries(SEGUROS)) {
-  const arq = `${F}/pagina-${id}.png`
+  // plano de saúde: até chegar a foto própria (pagina-saude.png), o topo usa o céu da chamada final
+  const arq = existsSync(`${F}/pagina-${id}.png`) ? `${F}/pagina-${id}.png` : `${F}/cta-ceu.png`
   await variantes(arq, `topo-${id}`, LARGA)
   const { width: W, height: H } = await sharp(arq).metadata()
   const w = Math.round(H * 0.75)

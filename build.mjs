@@ -86,7 +86,7 @@ const IMAGENS_EDITAVEIS = [
   { nome: 'sobre-topo', rotulo: 'Foto do topo', grupo: 'Página Sobre' },
   ...solucoes.flatMap((s) => [
     { nome: `topo-${s.id}`, rotulo: `${s.nome}: foto do topo`, grupo: 'Páginas de seguro' },
-    { nome: `card-${s.id}`, rotulo: `${s.nome}: foto do cartão na página inicial`, grupo: 'Páginas de seguro' },
+    ...(s.grade === false ? [] : [{ nome: `card-${s.id}`, rotulo: `${s.nome}: foto do cartão na página inicial`, grupo: 'Páginas de seguro' }]),
   ]),
 ]
 const imgCms = {} // nome -> versões geradas da foto trocada no painel
@@ -335,7 +335,8 @@ const cardSolucao = (s, i) => `
               <span class="card__seta vidro" aria-hidden="true">${icone('arrow-up-right', 'regular')}</span>
             </div>
           </li>`
-const htmlSolucoes = () => solucoes.map(cardSolucao).join('')
+// plano de saúde (grade: false) tem seção própria na Home; a grade é dos 7 seguros
+const htmlSolucoes = () => solucoes.filter((s) => s.grade !== false).map(cardSolucao).join('')
 // submenu "Soluções" do topo: as 7 páginas com ícone, nome e a linha do que cobre
 const htmlSolucoesMenu = () =>
   solucoes

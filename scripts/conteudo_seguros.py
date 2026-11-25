@@ -128,4 +128,22 @@ MAIS = {
             ["Qual limite eu devo escolher?", "Depende do tamanho do dano que a sua atividade pode causar e do que o contrato exige. A gente ajuda a calcular."],
         ],
     ),
+    "saude": dict(
+        entendaTitulo=["Plano de saúde,", "explicado antes de assinar."],
+        entenda=[
+            "O plano de saúde dá acesso a consultas, exames, internações e outros atendimentos na rede da operadora, conforme o tipo de plano contratado. Os planos são regulados pela ANS, a Agência Nacional de Saúde Suplementar, que define a lista mínima de procedimentos que todos precisam cobrir.",
+            "O que muda de um plano pro outro é a rede de hospitais e médicos, a área de cobertura, o tipo de quarto na internação, a coparticipação e o reembolso. É nesses detalhes que a gente compara as operadoras pra você.",
+        ],
+        precoTitulo="O que pesa no preço",
+        preco=[["user", "Idade de cada pessoa", "O valor muda por faixa etária"], ["hospital", "Rede escolhida", "Hospitais e laboratórios incluídos"], ["bed", "Acomodação", "Enfermaria ou apartamento"], ["coins", "Coparticipação", "Mensalidade menor, pagando parte de cada uso"]],
+        extras=[["tooth", "Plano odontológico junto"], ["airplane", "Assistência em viagem, conforme o plano"], ["receipt", "Reembolso maior pra médico fora da rede"]],
+        passosTitulo=["Da cotação", "à carteirinha."],
+        passos=[["Conversa", "Quem vai entrar no plano, idades, cidade e os médicos e hospitais que importam."], ["Comparação", "A gente cota nas operadoras e mostra as diferenças lado a lado."], ["Proposta", "Você escolhe, preenche a declaração de saúde e envia os documentos."], ["Plano ativo", "Com a proposta aceita, chega a carteirinha. E o consultor segue do seu lado."]],
+        perguntas=[
+            ["O que é carência?", "É o prazo entre a contratação e o direito de usar alguns atendimentos. A ANS define prazos máximos, e em alguns casos dá pra aproveitar a carência já cumprida em outro plano."],
+            ["Como funciona o reajuste?", "Existe o reajuste anual e o por mudança de faixa etária. No plano empresarial, o anual é negociado com a operadora. A gente explica antes de você assinar."],
+            ["Já tenho plano. Vale trocar?", "Pode valer. Comparamos o seu plano atual com o mercado e conferimos se a portabilidade de carências se aplica ao seu caso."],
+        ],
+    ),
 }
+
