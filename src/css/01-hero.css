@@ -7,13 +7,15 @@
    título, as duas pessoas na metade de baixo e os botões empilhados na base. A foto é
    deitada: no celular ela entra larga (175vw), presa embaixo e à direita, e o céu de cima
    continua num degradê da mesma cor.                                                      */
-.hero { padding: var(--respiro); background: var(--off); }
+/* sem a margem clara e sem o canto arredondado: o hero vai de borda a borda (pedido do Felipe,
+   2026-11-25) */
+.hero { padding: 0; background: var(--off); }
 .hero__cartao {
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: max(620px, calc(100svh - var(--respiro) * 2));
-  border-radius: var(--raio-g);
+  min-height: max(620px, 100svh);
+  border-radius: 0;
   overflow: clip;
   background: linear-gradient(180deg, #12394B 0%, #1E5570 100%);
   isolation: isolate;
@@ -39,7 +41,7 @@
 .hero__botoes .btn--leve { padding-inline: 32px; }
 
 @media (max-width: 63.99em) {
-  .hero__cartao { align-items: stretch; min-height: max(640px, calc(100svh - var(--respiro) * 2)); }
+  .hero__cartao { align-items: stretch; min-height: max(640px, 100svh); }
   /* a foto deitada fica larga, presa embaixo à direita; o céu de cima vem do degradê do
      cartão, e a borda de cima da foto some numa máscara pra emenda não aparecer */
   .hero__foto { inset: auto -14% 0 auto; width: 210%; max-width: none; height: auto; object-fit: initial; -webkit-mask: linear-gradient(180deg, transparent 0%, #000 14%); mask: linear-gradient(180deg, transparent 0%, #000 14%); }

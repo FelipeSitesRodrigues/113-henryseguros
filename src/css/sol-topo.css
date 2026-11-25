@@ -145,3 +145,4 @@
 @media (max-width: 39.99em) {
   .sfim__linha .btn { width: 100%; white-space: normal; }
 }
+@media (max-width: 63.99em) { .ptopo__foto[src*="topo-saude"] { object-position: 88% 50%; } }

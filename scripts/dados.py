@@ -92,7 +92,7 @@ S = [
          grade=False,  # tem seção própria na Home (03d-saude), fora da grade dos 7 seguros
          descricao="Para você, sua família e sua empresa.",
          widgets=[["heartbeat", "Rede credenciada · Conferida"]],
-         alt="Céu de fim de tarde sobre Alphaville",
+         alt="Família sorrindo de mãos dadas numa rua arborizada de condomínio em Alphaville ao pôr do sol",
          h1a="Plano de saúde", h1b="sem escolher no escuro.",
          sub="Comparamos SulAmérica, Amil, Bradesco Saúde, Omint, Porto Saúde e Alice e indicamos o plano certo pra você, sua família ou sua empresa.",
          botao="Cotar plano de saúde",

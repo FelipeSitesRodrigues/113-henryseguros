@@ -322,3 +322,10 @@ figure, blockquote { margin: 0; }
   .brilho-fio, .brilho__volta, .brilho__ponto { animation: none !important; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* barra de rolagem da página nas cores da Henry: trilho off-white, polegar petróleo que fica verde no hover */
+html { scrollbar-color: var(--petroleo) var(--off); }
+html::-webkit-scrollbar { width: 12px; }
+html::-webkit-scrollbar-track { background: var(--off); }
+html::-webkit-scrollbar-thumb { background: var(--petroleo); border-radius: 999px; border: 3px solid var(--off); }
+html::-webkit-scrollbar-thumb:hover { background: var(--verde); }
