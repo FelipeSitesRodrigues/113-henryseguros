@@ -1,0 +1,45 @@
+# Monta o site e sobe na HostGator por FTP.
+# Roda a cada push no main e quando o Paulo clica em Publicar no /painel
+# (a função publicar() do Supabase dispara o evento "publicar" pela API do GitHub).
+name: Publicar na HostGator
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [publicar]
+  workflow_dispatch:
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # o build lê o conteúdo do painel no Supabase; se o Supabase não responder, falha
+      # e o site no ar continua o anterior
+      - run: node build.mjs --publicar
+
+      - name: Subir por FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVIDOR }}
+          username: ${{ secrets.FTP_USUARIO }}
+          password: ${{ secrets.FTP_SENHA }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./
+          exclude: |
+            **/preview/**

@@ -1,0 +1,68 @@
+# HostGator (Apache): o que o vercel.json fazia na Vercel.
+# Endereço sem .html, https com www, cache das imagens e fontes, painel fora do Google.
+
+DirectoryIndex index.html
+DirectorySlash Off
+Options -Indexes
+ErrorDocument 404 /index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # validação do SSL grátis (AutoSSL) passa direto
+  RewriteRule ^\.well-known/ - [L]
+
+  # https e www (o domínio do site é https://www.henryseguros.com.br)
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} ^henryseguros\.com\.br$ [NC]
+  RewriteRule ^ https://www.henryseguros.com.br%{REQUEST_URI} [R=301,L]
+
+  # /pagina.html -> /pagina (e /x/index.html -> /x)
+  RewriteCond %{THE_REQUEST} \s/+(.+?)/index\.html[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,L]
+  RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,L]
+
+  # barra no fim -> sem barra
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+  # /pagina -> pagina.html (antes da pasta: /blog é blog.html, /blog/post é blog/post.html)
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.+)$ $1.html [L]
+
+  # /painel -> painel/index.html
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.+)$ $1/index.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  <If "%{REQUEST_URI} =~ m#^/(painel|preview)(/|$)#">
+    Header set X-Robots-Tag "noindex"
+  </If>
+  <If "%{REQUEST_URI} =~ m#^/painel(/|$)#">
+    Header set Cache-Control "no-cache"
+  </If>
+  <If "%{REQUEST_URI} =~ m#^/assets/(img|video)/#">
+    Header set Cache-Control "public, max-age=2592000, stale-while-revalidate=86400"
+  </If>
+  <If "%{REQUEST_URI} =~ m#^/assets/fonts/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+  <If "%{REQUEST_URI} =~ m#\.html$|^/$|^/[^.]*$#">
+    Header set Cache-Control "no-cache"
+  </If>
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType image/avif .avif
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml text/xml application/xml text/plain
+</IfModule>

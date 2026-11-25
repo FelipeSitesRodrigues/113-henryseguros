@@ -51,7 +51,7 @@ const BASE = (cfg.dominio || '').replace(/\/$/, '')
 // ---------------------------------------------------------------- conteúdo do painel (Supabase)
 // O que o Paulo muda no /painel sobrescreve o padrão do código. Na Vercel o build falha se o
 // Supabase não responder (fica no ar a versão anterior); no PC segue com o padrão e avisa.
-const NA_VERCEL = !!process.env.VERCEL
+const NA_VERCEL = !!(process.env.VERCEL || process.env.GITHUB_ACTIONS) // no servidor de build (Vercel ou GitHub Actions)
 const cms = await carregarCms({ cfg, obrigatorio: NA_VERCEL || process.argv.includes('--cms-obrigatorio'), avisos })
 iniciarCacheCms(RAIZ)
 const CONTATO = ['whatsapp', 'whatsappExibir', 'telefone', 'email', 'instagram', 'instagramUrl', 'endereco', 'bairro', 'cidade', 'uf', 'horario']
@@ -139,7 +139,7 @@ function copiarPasta(de, para) {
   if (!existsSync(de)) return
   mkdirSync(para, { recursive: true })
   for (const nome of readdirSync(de)) {
-    if (nome.startsWith('.') || nome === 'manifesto.json') continue
+    if ((nome.startsWith('.') && nome !== '.htaccess') || nome === 'manifesto.json') continue
     const a = path.join(de, nome)
     const b = path.join(para, nome)
     const st = statSync(a)
